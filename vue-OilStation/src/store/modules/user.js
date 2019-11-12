@@ -26,10 +26,15 @@ const actions = {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
       login({ username: username.trim(), password: password }).then(response => {
-        const { data } = response
+        const { data } = response//token
+        console.log(response.message)
+        // this.$message({
+        //   message: response.message,
+        //   type: 'success'
+        // });
         commit('SET_TOKEN', data)//data.token
         setToken(data)//data.token
-        resolve()
+        resolve(response.message)
       }).catch(error => {
         reject(error)
       })
@@ -46,9 +51,10 @@ const actions = {
         }
 
         const { name, avatar } = data
+        //console.log(data)
 
-        commit('SET_NAME', name)
-        commit('SET_AVATAR', avatar)
+        commit('SET_NAME', name)//
+        commit('SET_AVATAR', avatar)//头像地址
         resolve(data)
       }).catch(error => {
         reject(error)

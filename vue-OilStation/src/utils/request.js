@@ -7,7 +7,7 @@ import { getToken } from '@/utils/auth'
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
   // withCredentials: true, // send cookies when cross-domain requests
-  timeout: 5000 // request timeout
+  timeout: 50000000 // request timeout
 })
 
 // request interceptor
@@ -48,7 +48,7 @@ service.interceptors.response.use(
     if (res.code !== 200) {
       console.log("Un200Error---"+res)
       Message({
-        message: res.message || '200Error',
+        message: res.message || 'Un200Error',
         type: 'error',
         duration: 5 * 1000
       })

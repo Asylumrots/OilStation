@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace OilStationCoreAPI.Model
+namespace OilStationCoreAPI.Models
 {
     public partial class ProcessItem
     {

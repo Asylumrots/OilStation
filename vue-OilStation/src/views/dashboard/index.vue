@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard-container">
-    <div class="dashboard-text">用户名: {{ name }}</div>
+    <div class="dashboard-text">用户姓名: {{ name }}</div>
     <!-- <div class="dashboard-text">当前时间: {{ time }}</div> -->
   </div>
 </template>
@@ -9,7 +9,9 @@
 import { mapGetters } from 'vuex'
 
 export default {
-  name: 'Dashboard',
+  name: 'NotFound',
+  methods:{
+  },
   computed: {
     ...mapGetters([
       'name' 

@@ -1,8 +1,10 @@
 ﻿using System;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using OilStationCoreAPI.IdentityModel;
 
-namespace OilStationCoreAPI.Model
+namespace OilStationCoreAPI.Models
 {
     public partial class OSMSContext : DbContext
     {
@@ -48,6 +50,7 @@ namespace OilStationCoreAPI.Model
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //base.OnModelCreating(modelBuilder);
             modelBuilder.HasAnnotation("ProductVersion", "2.2.4-servicing-10062");
 
             modelBuilder.Entity<Approver>(entity =>

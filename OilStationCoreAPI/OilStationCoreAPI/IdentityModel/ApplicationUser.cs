@@ -8,6 +8,11 @@ namespace OilStationCoreAPI.IdentityModel
 {
     public class ApplicationUser: IdentityUser  //重写identityUser 并注册到服务中
     {
+        public ApplicationUser()
+        {
+            //创建用户的时候id赋值为guid
+            Id = Guid.NewGuid().ToString();
+        }
         /// <summary>
         /// 用户性别
         /// </summary>

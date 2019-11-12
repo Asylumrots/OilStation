@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace OilStationCoreAPI.Model
+namespace OilStationCoreAPI.Models
 {
-    public partial class StaffRole
+    public partial class RoleResourceModule
     {
         public Guid Id { get; set; }
-        public Guid StaffId { get; set; }
         public Guid RoleId { get; set; }
+        public Guid ResourceModuleId { get; set; }
     }
 }

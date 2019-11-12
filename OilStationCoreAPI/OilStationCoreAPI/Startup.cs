@@ -16,7 +16,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using OilStationCoreAPI.IdentityModel;
 using OilStationCoreAPI.IServices;
-using OilStationCoreAPI.Model;
+using OilStationCoreAPI.Models;
 using OilStationCoreAPI.Services;
 using Swashbuckle.AspNetCore.Swagger;
 
@@ -37,8 +37,9 @@ namespace OilStationCoreAPI
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             #region 依赖注入Services
-            services.AddSingleton<IUserServices, UserServices>();
+            services.AddSingleton<IStaffServices, StaffServices>();
             #endregion
+
             #region 跨域
             //跨域方法，声明策略,下边app中配置
             services.AddCors(c =>
@@ -66,6 +67,7 @@ namespace OilStationCoreAPI
 
             //services.AddCors(options => options.AddPolicy("AllowCors", builder => builder.AllowAnyOrigin().AllowAnyMethod()));
             #endregion
+
             #region Swagger
             services.AddSwaggerGen(c =>
             {
@@ -103,12 +105,37 @@ namespace OilStationCoreAPI
                 #endregion
             });
             #endregion
+
             #region 注册dbcontext和identity服务
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(
+                Configuration.GetConnectionString("DefaultConnection")));
             services.AddDbContext<OSMSContext>(options => options.UseSqlServer(
                 Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<ApplicationUser>()
                 .AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<OSMSContext>();
+                .AddEntityFrameworkStores<ApplicationDbContext>();
+            #endregion
+
+            #region 定义identity注册登录规则
+            services.Configure<IdentityOptions>(options =>
+            {
+                // Password settings.
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 3;
+                options.Password.RequiredUniqueChars = 1;
+
+                // Lockout settings.
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                options.Lockout.MaxFailedAccessAttempts = 10;
+                options.Lockout.AllowedForNewUsers = false;
+
+                // User settings.
+                options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+                options.User.RequireUniqueEmail = false;
+            });
             #endregion
 
         }
@@ -133,6 +160,7 @@ namespace OilStationCoreAPI
             //app.UseHttpsRedirection().UseCors(builder =>
             //builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             #endregion
+
             #region 使用Swagger
             app.UseSwagger();
             app.UseSwaggerUI(s =>
@@ -140,6 +168,7 @@ namespace OilStationCoreAPI
                 s.SwaggerEndpoint("/swagger/v1/swagger.json", "OilStationCoreAPI API V1.0");
             });
             #endregion
+
             #region 使用身份验证
             app.UseAuthentication();
             #endregion

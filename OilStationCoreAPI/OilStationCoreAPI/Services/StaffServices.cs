@@ -1,5 +1,5 @@
 ﻿using OilStationCoreAPI.IServices;
-using OilStationCoreAPI.Model;
+using OilStationCoreAPI.Models;
 using OilStationCoreAPI.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace OilStationCoreAPI.Services
 {
-    public class UserServices : IUserServices
+    public class StaffServices : IStaffServices
     {
         OSMSContext db = new OSMSContext();
 

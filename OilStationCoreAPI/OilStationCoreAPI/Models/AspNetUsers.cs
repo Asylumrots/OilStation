@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace OilStationCoreAPI.Model
+namespace OilStationCoreAPI.Models
 {
     public partial class AspNetUsers
     {
@@ -29,14 +29,14 @@ namespace OilStationCoreAPI.Model
         public bool LockoutEnabled { get; set; }
         public int AccessFailedCount { get; set; }
         public string UserSex { get; set; }
-        public DateTime BirthDay { get; set; }
+        public DateTime? BirthDay { get; set; }
         public string Address { get; set; }
-        public int Status { get; set; }
-        public DateTime CreateTime { get; set; }
-        public DateTime UpdateTime { get; set; }
+        public int? Status { get; set; }
+        public DateTime? CreateTime { get; set; }
+        public DateTime? UpdateTime { get; set; }
         public string JobId { get; set; }
         public string OrgId { get; set; }
-        public int IsHsegroup { get; set; }
+        public int? IsHsegroup { get; set; }
 
         public virtual ICollection<AspNetUserClaims> AspNetUserClaims { get; set; }
         public virtual ICollection<AspNetUserLogins> AspNetUserLogins { get; set; }

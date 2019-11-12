@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using OilStationCoreAPI.AuthHepler;
+using OilStationCoreAPI.IdentityModel;
 using OilStationCoreAPI.IServices;
-using OilStationCoreAPI.Model;
+using OilStationCoreAPI.Models;
 using OilStationCoreAPI.ViewModels;
 using static OilStationCoreAPI.ViewModels.CodeEnum;
 
@@ -16,18 +19,21 @@ namespace OilStationCoreAPI.Controllers
     [Route("api/[controller]/[action]")]
     public class UserController : Controller
     {
-        private readonly IUserServices _userServices;
-
-        public UserController(IUserServices userServices)
+        public UserController(IStaffServices staffServices,UserManager<ApplicationUser> userManager,SignInManager<ApplicationUser> signInManager)
         {
-            this._userServices = userServices;
+            this._staffServices = staffServices;
+            this._userManager = userManager;
+            this._signInManager = signInManager;
         }
 
-        OSMSContext db = new OSMSContext();
+        private readonly IStaffServices _staffServices;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
 
         // POST api/<controller>
         [HttpPost]
-        public ResponseModel<string> Login([FromBody]LoginViewModel loginViewModel)
+        [AllowAnonymous]
+        public  async Task<ResponseModel<string>> Login([FromBody]LoginViewModel loginViewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -37,38 +43,40 @@ namespace OilStationCoreAPI.Controllers
                     message = "用户名或密码验证未通过"
                 };
             }
-            var model = _userServices.Login(loginViewModel);
+            var model = await _userManager.FindByNameAsync(loginViewModel.username);
             if (model != null)
             {
-                string token;
-              //  var userRole = "admin";
-                TokenModelJwt tokenModel = new TokenModelJwt { Uid = model.Id };
-                token = JwtHelper.IssueJwt(tokenModel);
-                return new ResponseModel<string>
+                var result = await _signInManager.PasswordSignInAsync(model, loginViewModel.password, false, true);
+                if (result.Succeeded)
                 {
-                    code = (int)code.Success,
-                    data = token,
-                    message = "登录成功,欢迎" + model.Name,
-                };
+                    string token;
+                    //  var userRole = "admin";
+                    TokenModelJwt tokenModel = new TokenModelJwt { Uid = model.Id };
+                    token = JwtHelper.IssueJwt(tokenModel);
+                    return new ResponseModel<string>
+                    {
+                        code = (int)code.Success,
+                        data = token,
+                        message = "登录成功,欢迎" + model.UserName,
+                    };
+                }
             }
-            else
+            return new ResponseModel<string>
             {
-                return new ResponseModel<string>
-                {
-                    code = (int)code.LoginFaile,
-                    message = "登录失败,用户名或密码错误"
-                };
-            }
+                code = (int)code.LoginFaile,
+                message = "登录失败,用户名或密码错误"
+            };
         }
 
         [HttpPost]
-        public IActionResult Info(string token)
+        public async Task<IActionResult> Info(string token)
         {
             TokenModelJwt model = JwtHelper.SerilaizeJwt(token);
+            var user = await _userManager.FindByIdAsync(model.Uid);
             return Ok(new 
             {
                 code = (int)code.Success,
-                data = new {name=model.Uid, avatar= "https://localhost:44395/img/default.png" },
+                data = new {name=user.UserName, avatar= "https://localhost:44395/img/default.png" },
                 message = "信息获取成功"
             });
         }
@@ -81,6 +89,18 @@ namespace OilStationCoreAPI.Controllers
                 code = (int)code.Success,
                 data = "success"
             });
+        }
+
+        [HttpGet]
+        public async Task<int> reg()
+        {
+            var user = await _userManager.CreateAsync(new ApplicationUser
+            { UserName = "admin2", Email = "12345678@qq.com", UserSex = "1", BirthDay = Convert.ToDateTime("1999-12-05"), Address = "湖北武汉", Status = 1, CreateTime = DateTime.Now.ToLocalTime(), UpdateTime = DateTime.Now.ToLocalTime(), JobId = "1", OrgId = "1", IsHSEGroup = 0 }, "Qq123.");
+            if (user.Succeeded)
+            {
+                return 1;
+            }
+            return 0;
         }
     }
 }

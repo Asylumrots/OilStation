@@ -13,7 +13,7 @@ namespace OilStationCoreAPI.AuthHepler
         /// <summary>
         /// Id
         /// </summary>
-        public Guid Uid { get; set; }
+        public string Uid { get; set; }
         /// <summary>
         /// 角色
         /// </summary>
