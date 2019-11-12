@@ -82,14 +82,12 @@ namespace OilStationCoreAPI.Controllers
         }
 
         [HttpGet]
-        public IActionResult Logout()
+        public ResponseModel<string> Logout() => new ResponseModel<string>
         {
-            return Ok(new ResponseModel<string>
-            {
-                code = (int)code.Success,
-                data = "success"
-            });
-        }
+            code = (int)code.Success,
+            data = "success",
+            message = ""
+        };
 
         [HttpGet]
         public async Task<int> reg()

@@ -27,14 +27,14 @@ const actions = {
     return new Promise((resolve, reject) => {
       login({ username: username.trim(), password: password }).then(response => {
         const { data } = response//token
-        console.log(response.message)
+        //console.log(response.message)
         // this.$message({
         //   message: response.message,
         //   type: 'success'
         // });
         commit('SET_TOKEN', data)//data.token
         setToken(data)//data.token
-        resolve(response.message)
+        resolve()
       }).catch(error => {
         reject(error)
       })
