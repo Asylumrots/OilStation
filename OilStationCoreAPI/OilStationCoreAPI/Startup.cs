@@ -6,11 +6,18 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using OilStationCoreAPI.IdentityModel;
+using OilStationCoreAPI.IServices;
+using OilStationCoreAPI.Model;
+using OilStationCoreAPI.Services;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace OilStationCoreAPI
@@ -28,6 +35,10 @@ namespace OilStationCoreAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            #region 依赖注入Services
+            services.AddSingleton<IUserServices, UserServices>();
+            #endregion
             #region 跨域
             //跨域方法，声明策略,下边app中配置
             services.AddCors(c =>
@@ -92,7 +103,14 @@ namespace OilStationCoreAPI
                 #endregion
             });
             #endregion
-            
+            #region 注册dbcontext和identity服务
+            services.AddDbContext<OSMSContext>(options => options.UseSqlServer(
+                Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDefaultIdentity<ApplicationUser>()
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<OSMSContext>();
+            #endregion
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -121,6 +139,9 @@ namespace OilStationCoreAPI
             {
                 s.SwaggerEndpoint("/swagger/v1/swagger.json", "OilStationCoreAPI API V1.0");
             });
+            #endregion
+            #region 使用身份验证
+            app.UseAuthentication();
             #endregion
 
             app.UseHttpsRedirection();

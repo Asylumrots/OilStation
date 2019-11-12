@@ -69,7 +69,7 @@ namespace OilStationCoreAPI.AuthHepler
             //}
             var tm = new TokenModelJwt
             {
-                Uid = jwtToken.Id,
+                Uid = new Guid(jwtToken.Id),
                 //Role = role != null ? role.ToString() : "",
             };
             return tm;

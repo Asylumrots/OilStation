@@ -4,7 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using OilStationCoreAPI.AuthHepler;
-using OilStationCoreAPI.Models;
+using OilStationCoreAPI.IServices;
+using OilStationCoreAPI.Model;
 using OilStationCoreAPI.ViewModels;
 using static OilStationCoreAPI.ViewModels.CodeEnum;
 
@@ -15,7 +16,15 @@ namespace OilStationCoreAPI.Controllers
     [Route("api/[controller]/[action]")]
     public class UserController : Controller
     {
+        private readonly IUserServices _userServices;
+
+        public UserController(IUserServices userServices)
+        {
+            this._userServices = userServices;
+        }
+
         OSMSContext db = new OSMSContext();
+
         // POST api/<controller>
         [HttpPost]
         public ResponseModel<string> Login([FromBody]LoginViewModel loginViewModel)
@@ -28,12 +37,12 @@ namespace OilStationCoreAPI.Controllers
                     message = "用户名或密码验证未通过"
                 };
             }
-            var model = db.Staff.Where(u => u.No == loginViewModel.username && u.Password == loginViewModel.password).FirstOrDefault();
+            var model = _userServices.Login(loginViewModel);
             if (model != null)
             {
                 string token;
               //  var userRole = "admin";
-                TokenModelJwt tokenModel = new TokenModelJwt { Uid = "1" };
+                TokenModelJwt tokenModel = new TokenModelJwt { Uid = model.Id };
                 token = JwtHelper.IssueJwt(tokenModel);
                 return new ResponseModel<string>
                 {

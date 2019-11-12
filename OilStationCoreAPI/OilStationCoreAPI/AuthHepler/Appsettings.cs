@@ -44,7 +44,7 @@ namespace OilStationCoreAPI.AuthHepler
             }
             catch (Exception e)
             {
-                return "";
+                return ""+e;
             }
         }
     }

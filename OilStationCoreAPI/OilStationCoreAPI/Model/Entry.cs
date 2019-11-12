@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace OilStationCoreAPI.Models
+namespace OilStationCoreAPI.Model
 {
     public partial class Entry
     {
