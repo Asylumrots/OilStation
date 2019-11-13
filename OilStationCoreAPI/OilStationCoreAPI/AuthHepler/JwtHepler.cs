@@ -35,7 +35,7 @@ namespace OilStationCoreAPI.AuthHepler
             };
             // 可以将一个用户的多个角色全部赋予；
             // 作者：DX 提供技术支持；
-            //claims.AddRange(tokenModel.Role.Split(',').Select(s => new Claim(ClaimTypes.Role, s)));
+            claims.AddRange(tokenModel.Role.Split(',').Select(s => new Claim(ClaimTypes.Role, s)));
             //秘钥 (SymmetricSecurityKey 对安全性的要求，密钥的长度太短会报出异常)
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -57,20 +57,20 @@ namespace OilStationCoreAPI.AuthHepler
         {
             var jwtHandler = new JwtSecurityTokenHandler();
             JwtSecurityToken jwtToken = new JwtSecurityToken(jwtStr);
-            //object role;
-            //try
-            //{
-            //    jwtToken.Payload.TryGetValue(ClaimTypes.Role, out role);
-            //}
-            //catch (Exception e)
-            //{
-            //    Console.WriteLine(e);
-            //    throw;
-            //}
+            object role;
+            try
+            {
+                jwtToken.Payload.TryGetValue(ClaimTypes.Role, out role);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
             var tm = new TokenModelJwt
             {
                 Uid = jwtToken.Id,
-                //Role = role != null ? role.ToString() : "",
+                Role = role != null ? role.ToString() : "",
             };
             return tm;
         }

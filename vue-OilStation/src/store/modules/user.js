@@ -26,7 +26,7 @@ const actions = {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
       login({ username: username.trim(), password: password }).then(response => {
-        const { data } = response//token
+        const { data } = response
         //console.log(response.message)
         // this.$message({
         //   message: response.message,
@@ -51,9 +51,8 @@ const actions = {
         }
 
         const { name, avatar } = data
-        //console.log(data)
 
-        commit('SET_NAME', name)//
+        commit('SET_NAME', name)
         commit('SET_AVATAR', avatar)//头像地址
         resolve(data)
       }).catch(error => {

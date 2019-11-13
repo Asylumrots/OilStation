@@ -20,6 +20,7 @@ service.interceptors.request.use(
       // ['X-Token'] is a custom headers key
       // please modify it according to the actual situation
       //config.headers['X-Token'] = getToken()
+      //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
       config.headers['Authorization'] = "Bearer " + getToken();
     }
     return config
@@ -48,7 +49,7 @@ service.interceptors.response.use(
     console.log(res)
     if (res.code == 200 && res.message!=null) {
       Message({
-        message: res.message || '成功',
+        message: res.message,
         type: 'success'
       })
     }

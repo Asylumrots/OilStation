@@ -19,16 +19,18 @@ namespace OilStationCoreAPI.Controllers
     [Route("api/[controller]/[action]")]
     public class UserController : Controller
     {
-        public UserController(IStaffServices staffServices,UserManager<ApplicationUser> userManager,SignInManager<ApplicationUser> signInManager)
+        public UserController(IStaffServices staffServices,UserManager<ApplicationUser> userManager,SignInManager<ApplicationUser> signInManager,RoleManager<IdentityRole> roleManager)
         {
             this._staffServices = staffServices;
             this._userManager = userManager;
             this._signInManager = signInManager;
+            this._roleManager = roleManager;
         }
 
         private readonly IStaffServices _staffServices;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
         // POST api/<controller>
         [HttpPost]
@@ -50,8 +52,8 @@ namespace OilStationCoreAPI.Controllers
                 if (result.Succeeded)
                 {
                     string token;
-                    //  var userRole = "admin";
-                    TokenModelJwt tokenModel = new TokenModelJwt { Uid = model.Id };
+                    var role = await _userManager.GetRolesAsync(model);
+                    TokenModelJwt tokenModel = new TokenModelJwt { Uid = model.Id,Role=role[0] };
                     token = JwtHelper.IssueJwt(tokenModel);
                     return new ResponseModel<string>
                     {
@@ -69,6 +71,7 @@ namespace OilStationCoreAPI.Controllers
         }
 
         [HttpPost]
+        //[Authorize]
         public async Task<IActionResult> Info(string token)
         {
             TokenModelJwt model = JwtHelper.SerilaizeJwt(token);
@@ -85,8 +88,7 @@ namespace OilStationCoreAPI.Controllers
         public ResponseModel<string> Logout() => new ResponseModel<string>
         {
             code = (int)code.Success,
-            data = "success",
-            message = ""
+            data = "success"
         };
 
         [HttpGet]
@@ -98,6 +100,26 @@ namespace OilStationCoreAPI.Controllers
             {
                 return 1;
             }
+            return 0;
+        }
+
+        [HttpGet]
+        public async Task<int> Role()
+        {
+            var role = await _roleManager.CreateAsync(new IdentityRole { Name = "Administrators" });
+            //var model = await _roleManager.FindByNameAsync("超级用户");
+            //var role = await _roleManager.DeleteAsync(model);
+            if (role.Succeeded)
+            {
+                return 1;
+            }
+            return 0;
+        }
+
+        [HttpGet]
+        [Authorize]
+        public int test()
+        {
             return 0;
         }
     }
