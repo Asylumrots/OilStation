@@ -17,9 +17,9 @@ using static OilStationCoreAPI.ViewModels.CodeEnum;
 namespace OilStationCoreAPI.Controllers
 {
     [Route("api/[controller]/[action]")]
-    public class UserController : Controller
+    public class UserController : ControllerBase
     {
-        public UserController(IStaffServices staffServices,UserManager<ApplicationUser> userManager,SignInManager<ApplicationUser> signInManager,RoleManager<IdentityRole> roleManager)
+        public UserController(IStaffServices staffServices, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager)
         {
             this._staffServices = staffServices;
             this._userManager = userManager;
@@ -35,7 +35,7 @@ namespace OilStationCoreAPI.Controllers
         // POST api/<controller>
         [HttpPost]
         [AllowAnonymous]
-        public  async Task<ResponseModel<string>> Login([FromBody]LoginViewModel loginViewModel)
+        public async Task<ResponseModel<string>> Login([FromBody]LoginViewModel loginViewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -53,7 +53,17 @@ namespace OilStationCoreAPI.Controllers
                 {
                     string token;
                     var role = await _userManager.GetRolesAsync(model);
-                    TokenModelJwt tokenModel = new TokenModelJwt { Uid = model.Id,Role=role[0] };
+                    TokenModelJwt tokenModel = new TokenModelJwt();
+                    if (role.Count == 0)
+                    {
+                        tokenModel.Uid = model.Id;
+                        tokenModel.Role = null;
+                    }
+                    else
+                    {
+                        tokenModel.Uid = model.Id;
+                        tokenModel.Role = role[0];
+                    }
                     token = JwtHelper.IssueJwt(tokenModel);
                     return new ResponseModel<string>
                     {
@@ -71,15 +81,15 @@ namespace OilStationCoreAPI.Controllers
         }
 
         [HttpPost]
-        //[Authorize]
+        [Authorize]
         public async Task<IActionResult> Info(string token)
         {
             TokenModelJwt model = JwtHelper.SerilaizeJwt(token);
             var user = await _userManager.FindByIdAsync(model.Uid);
-            return Ok(new 
+            return Ok(new
             {
                 code = (int)code.Success,
-                data = new {name=user.UserName, avatar= "https://localhost:44395/img/default.png" },
+                data = new { name = user.UserName, avatar = "https://localhost:44395/img/default.png" },
                 message = "信息获取成功"
             });
         }
@@ -90,37 +100,5 @@ namespace OilStationCoreAPI.Controllers
             code = (int)code.Success,
             data = "success"
         };
-
-        [HttpGet]
-        public async Task<int> reg()
-        {
-            var user = await _userManager.CreateAsync(new ApplicationUser
-            { UserName = "admin2", Email = "12345678@qq.com", UserSex = "1", BirthDay = Convert.ToDateTime("1999-12-05"), Address = "湖北武汉", Status = 1, CreateTime = DateTime.Now.ToLocalTime(), UpdateTime = DateTime.Now.ToLocalTime(), JobId = "1", OrgId = "1", IsHSEGroup = 0 }, "Qq123.");
-            if (user.Succeeded)
-            {
-                return 1;
-            }
-            return 0;
-        }
-
-        [HttpGet]
-        public async Task<int> Role()
-        {
-            var role = await _roleManager.CreateAsync(new IdentityRole { Name = "Administrators" });
-            //var model = await _roleManager.FindByNameAsync("超级用户");
-            //var role = await _roleManager.DeleteAsync(model);
-            if (role.Succeeded)
-            {
-                return 1;
-            }
-            return 0;
-        }
-
-        [HttpGet]
-        [Authorize]
-        public int test()
-        {
-            return 0;
-        }
     }
 }
