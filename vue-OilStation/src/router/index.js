@@ -55,15 +55,25 @@ export const constantRoutes = [
     }]
   },
   {
-    path: '/',
+    path: '/role',
     component: Layout,
-    redirect: '/',
-    children: [{
-      path: 'dashboard',
-      name: 'Dashboard',
-      component: () => import('@/views/dashboard/index'),
-      meta: { title: '权限', icon: 'lock' }
-    }]
+    redirect: '/example/role',
+    name: 'Role',
+    meta: { title: '权限', icon: 'lock' },
+    children: [
+      {
+        path: 'role',
+        name: 'Roles',
+        component: () => import('@/views/role/index'),
+        meta: { title: '角色管理', icon: 'friends' }
+      },
+      {
+        path: '',
+        name: '',
+        component: () => import('@/views/tree/index'),
+        meta: { title: '权限管理', icon: 'setting' }
+      }
+    ]
   },
 
   {

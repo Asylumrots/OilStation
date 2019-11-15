@@ -25,6 +25,7 @@ namespace OilStationCoreAPI.Models
         public virtual DbSet<AspNetUserRoles> AspNetUserRoles { get; set; }
         public virtual DbSet<AspNetUserTokens> AspNetUserTokens { get; set; }
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
+        //public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
         public virtual DbSet<Entry> Entry { get; set; }
         public virtual DbSet<Job> Job { get; set; }
         public virtual DbSet<LeaveOffice> LeaveOffice { get; set; }

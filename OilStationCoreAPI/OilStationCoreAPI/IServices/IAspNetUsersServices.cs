@@ -1,4 +1,5 @@
-﻿using OilStationCoreAPI.ViewModels;
+﻿using OilStationCoreAPI.Models;
+using OilStationCoreAPI.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,6 @@ namespace OilStationCoreAPI.IServices
 {
     public interface IAspNetUsersServices
     {
-
+        ResponseModel<IEnumerable<UserRoleViewModel>> UserRole_Get();
     }
 }

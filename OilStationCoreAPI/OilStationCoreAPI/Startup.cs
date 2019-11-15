@@ -38,10 +38,6 @@ namespace OilStationCoreAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            #region 依赖注入Services
-            services.AddSingleton<IStaffServices, StaffServices>();
-            #endregion
-
             #region 跨域
             //跨域方法，声明策略,下边app中配置
             services.AddCors(c =>
@@ -189,6 +185,12 @@ namespace OilStationCoreAPI
                     }
                 };
             });
+            #endregion
+
+            #region 依赖注入Services
+            services.AddSingleton<IStaffServices, StaffServices>();
+            services.AddSingleton<IAspNetUsersServices, AspNetUsersServices>();
+            services.AddSingleton<IAspNetRolesServices, AspNetRolesServices>();
             #endregion
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

@@ -19,15 +19,17 @@ namespace OilStationCoreAPI.Controllers
     [Route("api/[controller]/[action]")]
     public class UserController : ControllerBase
     {
-        public UserController(IStaffServices staffServices, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager)
+        public UserController(IAspNetUsersServices aspNetUsersServices,IAspNetRolesServices aspNetRolesServices, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager)
         {
-            this._staffServices = staffServices;
+            this._aspNetUsersServices = aspNetUsersServices;
+            this._aspNetRolesServices = aspNetRolesServices;
             this._userManager = userManager;
             this._signInManager = signInManager;
             this._roleManager = roleManager;
         }
 
-        private readonly IStaffServices _staffServices;
+        private readonly IAspNetUsersServices _aspNetUsersServices;
+        private readonly IAspNetRolesServices _aspNetRolesServices;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
@@ -100,5 +102,17 @@ namespace OilStationCoreAPI.Controllers
             code = (int)code.Success,
             data = "success"
         };
+
+        [HttpGet]
+        public ResponseModel<IEnumerable<UserRoleViewModel>> UserRole_Get()
+        {
+            return _aspNetUsersServices.UserRole_Get();
+        }
+
+        [HttpGet]
+        public ResponseModel<IEnumerable<RolesViewModel>> Roles_Get()
+        {
+            return _aspNetRolesServices.Roles_Get();
+        }
     }
 }

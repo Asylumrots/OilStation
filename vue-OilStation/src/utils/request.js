@@ -47,7 +47,7 @@ service.interceptors.response.use(
   response => {
     const res = response.data
     console.log(res)
-    if (res.code == 200 && res.message!=null) {
+    if (res.code == 200 && res.message != null) {
       Message({
         message: res.message,
         type: 'success'
