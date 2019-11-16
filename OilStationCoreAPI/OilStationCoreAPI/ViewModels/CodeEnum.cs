@@ -28,6 +28,11 @@ namespace OilStationCoreAPI.ViewModels
             /// 用户名或密码错误
             /// </summary>
             LoginFaile = 101,
+
+            /// <summary>
+            /// 修改用户角色
+            /// </summary>
+            UpdateRole=203,
         }
     }
 }

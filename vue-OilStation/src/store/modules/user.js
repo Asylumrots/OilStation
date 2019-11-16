@@ -1,6 +1,6 @@
 import { login, logout, getInfo } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
-import { resetRouter } from '@/router'
+import router, { resetRouter } from '@/router'
 
 const state = {
   token: getToken(),
@@ -74,6 +74,7 @@ const actions = {
         //dispatch('tagsView/delAllViews', null, { root: true })
 
         resolve()
+        router.go(0)
       }).catch(error => {
         reject(error)
       })

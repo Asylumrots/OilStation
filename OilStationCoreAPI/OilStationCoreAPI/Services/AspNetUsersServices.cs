@@ -23,13 +23,13 @@ namespace OilStationCoreAPI.Services
         OSMSContext db = new OSMSContext();
         //ApplicationDbContext adb = new ApplicationDbContext();
 
-        public ResponseModel<IEnumerable<UserRoleViewModel>> UserRole_Get()
+        public ResponseModel<IEnumerable<UserAndRoleViewModel>> UserRole_Get()
         {
-            List<UserRoleViewModel> reList = new List<UserRoleViewModel>();
+            List<UserAndRoleViewModel> reList = new List<UserAndRoleViewModel>();
             var list = db.AspNetUsers.Where(x => true);
             foreach (var item in list)
             {
-                UserRoleViewModel userRoleViewModel = new UserRoleViewModel();
+                UserAndRoleViewModel userRoleViewModel = new UserAndRoleViewModel();
                 var s = db.AspNetUserRoles.Where(x => x.UserId == item.Id).FirstOrDefault();
                 string roleName = null;
                 if (s != null)
@@ -50,7 +50,7 @@ namespace OilStationCoreAPI.Services
                 reList.Add(userRoleViewModel);
             }
             reList.AsEnumerable();
-            return new ResponseModel<IEnumerable<UserRoleViewModel>> { code = (int)code.Success, data = reList, message = "用户角色信息获取成功" };
+            return new ResponseModel<IEnumerable<UserAndRoleViewModel>> { code = (int)code.Success, data = reList, message = "用户角色信息获取成功" };
         }
     }
 }

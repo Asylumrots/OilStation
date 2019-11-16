@@ -9,6 +9,7 @@ using OilStationCoreAPI.AuthHepler;
 using OilStationCoreAPI.IdentityModel;
 using OilStationCoreAPI.IServices;
 using OilStationCoreAPI.Models;
+using OilStationCoreAPI.Services;
 using OilStationCoreAPI.ViewModels;
 using static OilStationCoreAPI.ViewModels.CodeEnum;
 
@@ -104,7 +105,7 @@ namespace OilStationCoreAPI.Controllers
         };
 
         [HttpGet]
-        public ResponseModel<IEnumerable<UserRoleViewModel>> UserRole_Get()
+        public ResponseModel<IEnumerable<UserAndRoleViewModel>> UserRole_Get()
         {
             return _aspNetUsersServices.UserRole_Get();
         }
@@ -113,6 +114,13 @@ namespace OilStationCoreAPI.Controllers
         public ResponseModel<IEnumerable<RolesViewModel>> Roles_Get()
         {
             return _aspNetRolesServices.Roles_Get();
+        }
+
+        [HttpPost]
+        [Authorize(Policy = "Administrators")]
+        public ResponseModel<bool> Roles_Update([FromBody]UserRolesViewModel model)
+        {
+            return _aspNetRolesServices.Roles_Update(model);
         }
     }
 }

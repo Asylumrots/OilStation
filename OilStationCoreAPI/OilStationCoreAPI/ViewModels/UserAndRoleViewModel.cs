@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace OilStationCoreAPI.ViewModels
 {
-    public class UserRoleViewModel
+    public class UserAndRoleViewModel
     {
         public string Id { get; set; }
         public string UserName { get; set; }

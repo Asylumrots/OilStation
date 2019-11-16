@@ -40,22 +40,22 @@
           <el-input v-model="username" autocomplete="off" style="width:204px" disabled="disabled"></el-input>
         </el-form-item>
         <el-form-item label="角色：" label-width="130px">
-          <el-select v-model="form.region" placeholder="请选择角色" v-for="item in rolesData" v-bind:key="item.id">
-            <el-option label="暂无" value="暂无"></el-option>
-            <el-option :label="item.name" :value="item.id"></el-option>
+          <el-select v-model="form.region" placeholder="请选择角色" >
+            <!-- <el-option label="暂无" value="暂无"></el-option> -->
+            <el-option :label="item.name" :value="item.id" v-for="item in rolesData" v-bind:key="item.id"></el-option>
           </el-select>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+        <el-button type="primary" @click="UpdateRoles()">确 定</el-button>
       </span>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import { GetUserRole,GetRoles } from "@/api/user";
+import { GetUserRole,GetRoles,UpdateRoles } from "@/api/user";
 export default {
   data() {
     return {
@@ -65,7 +65,8 @@ export default {
       username: "null",
       form: {
         region: ""
-      }
+      },
+      userID:"",
     };
   },
   created() {
@@ -86,9 +87,17 @@ export default {
     },
     OpenDia(index) {
       //console.log(index)
+      this.userID=this.tableData[index].id;
       this.dialogVisible = true;
       this.username = this.tableData[index].userName;
-      this.form.region = this.tableData[index].roleName;
+      this.form.region = this.rolesData[index].id;
+    },
+    UpdateRoles(){
+      //console.log(this.userID+"---"+this.form.region);
+      this.dialogVisible = false
+      UpdateRoles(this.userID,this.form.region).then(res=>{
+        console.log(res);
+      })
     }
   }
 };

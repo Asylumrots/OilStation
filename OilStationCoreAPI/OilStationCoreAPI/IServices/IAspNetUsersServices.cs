@@ -9,6 +9,6 @@ namespace OilStationCoreAPI.IServices
 {
     public interface IAspNetUsersServices
     {
-        ResponseModel<IEnumerable<UserRoleViewModel>> UserRole_Get();
+        ResponseModel<IEnumerable<UserAndRoleViewModel>> UserRole_Get();
     }
 }

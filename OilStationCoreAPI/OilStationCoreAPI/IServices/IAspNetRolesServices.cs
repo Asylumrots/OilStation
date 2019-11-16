@@ -9,5 +9,7 @@ namespace OilStationCoreAPI.IServices
     public interface IAspNetRolesServices
     {
         ResponseModel<IEnumerable<RolesViewModel>> Roles_Get();
+
+        ResponseModel<bool> Roles_Update(UserRolesViewModel model);
     }
 }

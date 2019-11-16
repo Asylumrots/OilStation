@@ -33,7 +33,15 @@ export function GetUserRole() {
 export function GetRoles() {
   return request({
     url: '/User/Roles_Get',
-    method: 'get',
+    method: 'get'
+  })
+}
+
+export function UpdateRoles(userId,roleId){
+  return request({
+    url:'/User/Roles_Update',
+    method:'post',
+    data:{userId,roleId}
   })
 }
 
