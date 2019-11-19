@@ -35,6 +35,8 @@ namespace OilStationCoreAPI.AuthHepler
             };
             // 可以将一个用户的多个角色全部赋予；
             // 作者：DX 提供技术支持；
+            //添加声明
+            claims.AddRange(tokenModel.Claims.Select(x => new Claim(x.Type, x.Value)));
             //如果tokenModel的角色为空则，不进行赋予角色
             if (tokenModel.Role!=null)
             {

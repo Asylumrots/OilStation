@@ -140,6 +140,8 @@ namespace OilStationCoreAPI
             //[Authorize(Policy = "Admin")]
             services.AddAuthorization(options=> {
                 options.AddPolicy("Administrators", policy => policy.RequireRole("Administrators"));
+                options.AddPolicy("Roles_Get", policy => policy.RequireClaim("Roles", "Get"));
+                options.AddPolicy("Roles_Update", policy => policy.RequireClaim("Roles","Update"));
             });
             #endregion
 

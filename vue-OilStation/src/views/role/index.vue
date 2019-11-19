@@ -82,7 +82,6 @@ export default {
     GetRoles() {
       GetRoles().then(res => {
         this.rolesData=res.data;
-        console.log(this.rolesData)
       });
     },
     OpenDia(index) {
@@ -90,13 +89,16 @@ export default {
       this.userID=this.tableData[index].id;
       this.dialogVisible = true;
       this.username = this.tableData[index].userName;
-      this.form.region = this.rolesData[index].id;
+      this.form.region = this.tableData[index].roleName;
     },
     UpdateRoles(){
       //console.log(this.userID+"---"+this.form.region);
       this.dialogVisible = false
       UpdateRoles(this.userID,this.form.region).then(res=>{
         console.log(res);
+        //刷新数据
+        this.GetData();
+        this.GetRoles();
       })
     }
   }

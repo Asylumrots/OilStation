@@ -56,16 +56,20 @@ namespace OilStationCoreAPI.Controllers
                 {
                     string token;
                     var role = await _userManager.GetRolesAsync(model);
+                    var rolemodel = await _roleManager.FindByNameAsync(role[0]);
+                    var claim = await _roleManager.GetClaimsAsync(rolemodel);
                     TokenModelJwt tokenModel = new TokenModelJwt();
                     if (role.Count == 0)
                     {
                         tokenModel.Uid = model.Id;
                         tokenModel.Role = null;
+                        tokenModel.Claims = null;
                     }
                     else
                     {
                         tokenModel.Uid = model.Id;
                         tokenModel.Role = role[0];
+                        tokenModel.Claims = claim;
                     }
                     token = JwtHelper.IssueJwt(tokenModel);
                     return new ResponseModel<string>
@@ -98,6 +102,7 @@ namespace OilStationCoreAPI.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public ResponseModel<string> Logout() => new ResponseModel<string>
         {
             code = (int)code.Success,
@@ -117,7 +122,7 @@ namespace OilStationCoreAPI.Controllers
         }
 
         [HttpPost]
-        [Authorize(Policy = "Administrators")]
+        [Authorize(Policy = "Roles_Update")]
         public ResponseModel<bool> Roles_Update([FromBody]UserRolesViewModel model)
         {
             return _aspNetRolesServices.Roles_Update(model);
