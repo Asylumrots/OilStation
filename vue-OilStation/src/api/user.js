@@ -22,27 +22,3 @@ export function logout() {
     method: 'get'
   })
 }
-
-export function GetUserRole() {
-  return request({
-    url: '/User/UserRole_Get',
-    method: 'get',
-  })
-}
-
-export function GetRoles() {
-  return request({
-    url: '/User/Roles_Get',
-    method: 'get'
-  })
-}
-
-export function UpdateRoles(userId,roleId){
-  return request({
-    url:'/User/Roles_Update',
-    method:'post',
-    data:{userId,roleId}
-  })
-}
-
-

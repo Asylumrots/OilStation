@@ -1,0 +1,94 @@
+<template>
+  <div>
+    <el-table :data="tableData" style="width: 100%">
+      <!-- <el-table-column type="index"></el-table-column> -->
+      <el-table-column prop="id" label="ID" sortable></el-table-column>
+      <el-table-column prop="name" label="名称" sortable></el-table-column>
+      <el-table-column label="操作">
+        <template slot-scope="props">
+          <el-button type="primary" plain icon="el-icon-edit" @click="OpenDia(props.$index)">修改</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+    <el-dialog title="修改权限" :visible.sync="dialogVisible" width="30%">
+      <el-tree :data="data" show-checkbox node-key="code" ref="tree"></el-tree>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="Update()">确 定</el-button>
+      </span>
+    </el-dialog>
+  </div>
+</template>
+
+<script>
+import { GetRoles, GetClaim } from "@/api/authorize";
+// :default-expanded-keys="[2, 3]"
+// :default-checked-keys="[5]"
+export default {
+  data() {
+    return {
+      tableData: [],
+      dialogVisible: false,
+      data: [
+        {
+          code: "Roles",
+          label: "用户角色",
+          children: [
+            {
+              code: "Roles_Get",
+              label: "查看"
+            },
+            {
+              code: "Roles_Update",
+              label: "修改"
+            }
+          ]
+        },
+        {
+          code: "Claim",
+          label: "角色声明",
+          children: [
+            {
+              code: "Claim_Get",
+              label: "查看"
+            },
+            {
+              code: "Claim_Update",
+              label: "修改"
+            }
+          ]
+        }
+      ],
+      selectData: []
+    };
+  },
+  created() {
+    this.GetRoles();
+  },
+  methods: {
+    GetRoles() {
+      GetRoles().then(res => {
+        this.tableData = res.data;
+      });
+    },
+    // GetClaim(RoleId) {
+    //   GetClaim(RoleId).then(res => {
+    //     this.selectData = res.data;
+    //   });
+    // },
+    OpenDia(index) {
+      GetClaim(this.tableData[index].id).then(res => {
+        this.selectData = res.data;
+        this.dialogVisible = true;
+        this.$nextTick(() => {
+          this.$refs.tree.setCheckedKeys(this.selectData);
+        });
+      });
+    },
+    Update() {
+      this.dialogVisible = false;
+      console.log(this.$refs.tree.getCheckedKeys());
+    }
+  }
+};
+</script>

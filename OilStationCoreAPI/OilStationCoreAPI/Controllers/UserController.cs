@@ -20,7 +20,7 @@ namespace OilStationCoreAPI.Controllers
     [Route("api/[controller]/[action]")]
     public class UserController : ControllerBase
     {
-        public UserController(IAspNetUsersServices aspNetUsersServices,IAspNetRolesServices aspNetRolesServices, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager)
+        public UserController(IAspNetUsersServices aspNetUsersServices, IAspNetRolesServices aspNetRolesServices, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager)
         {
             this._aspNetUsersServices = aspNetUsersServices;
             this._aspNetRolesServices = aspNetRolesServices;
@@ -110,22 +110,31 @@ namespace OilStationCoreAPI.Controllers
         };
 
         [HttpGet]
+        [Authorize(Policy = "Roles_Get")]
         public ResponseModel<IEnumerable<UserAndRoleViewModel>> UserRole_Get()
         {
             return _aspNetUsersServices.UserRole_Get();
         }
 
         [HttpGet]
+        [Authorize(Policy = "Roles_Get")]
         public ResponseModel<IEnumerable<RolesViewModel>> Roles_Get()
         {
             return _aspNetRolesServices.Roles_Get();
         }
 
-        [HttpPost]
+        [HttpPut]
         [Authorize(Policy = "Roles_Update")]
         public ResponseModel<bool> Roles_Update([FromBody]UserRolesViewModel model)
         {
             return _aspNetRolesServices.Roles_Update(model);
         }
+
+        [HttpGet]
+        public ResponseModel<IEnumerable<string>> Claim_Get(string RoleId)
+        {
+            return _aspNetRolesServices.Claim_Get(RoleId);
+        }
+        
     }
 }

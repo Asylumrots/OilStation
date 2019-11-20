@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import { GetUserRole,GetRoles,UpdateRoles } from "@/api/user";
+import { GetUserRole,GetRoles,UpdateRoles } from "@/api/authorize";
 export default {
   data() {
     return {

@@ -46,5 +46,18 @@ namespace OilStationCoreAPI.Services
             else
                 return new ResponseModel<bool> { code = (int)code.UpdateRole, data = false, message = "修改用户角色失败！" };
         }
+
+        public ResponseModel<IEnumerable<string>> Claim_Get(string RoleId)
+        {
+            var list = db.AspNetRoleClaims.Where(x => x.RoleId == RoleId);
+            List<string> reList = new List<string>();
+            foreach (var item in list)
+            {
+                string str = item.ClaimType + "_" + item.ClaimValue;
+                reList.Add(str);
+            }
+            reList.AsEnumerable();
+            return new ResponseModel<IEnumerable<string>> { code = (int)code.Success, data = reList, message = "声明信息获取成功" };
+        }
     }
 }

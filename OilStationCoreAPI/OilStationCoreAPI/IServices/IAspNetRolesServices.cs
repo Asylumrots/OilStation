@@ -11,5 +11,7 @@ namespace OilStationCoreAPI.IServices
         ResponseModel<IEnumerable<RolesViewModel>> Roles_Get();
 
         ResponseModel<bool> Roles_Update(UserRolesViewModel model);
+
+        ResponseModel<IEnumerable<string>> Claim_Get(string RoleId);
     }
 }
