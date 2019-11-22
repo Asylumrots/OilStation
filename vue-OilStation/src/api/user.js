@@ -22,3 +22,19 @@ export function logout() {
     method: 'get'
   })
 }
+
+export function UpdateInfo(model) {
+  return request({
+    url: '/User/UserInfo_Update',
+    method: 'put',
+    data: model
+  })
+}
+
+export function DeleteInfo(id) {
+  return request({
+    url: '/User/UserInfo_Delete',
+    method: 'delete',
+    params:{id}
+  })
+}

@@ -10,5 +10,9 @@ namespace OilStationCoreAPI.IServices
     public interface IAspNetUsersServices
     {
         ResponseModel<IEnumerable<UserAndRoleViewModel>> UserRole_Get();
+
+        ResponseModel<bool> UserInfo_Update(UserInfoViewModel model);
+
+        ResponseModel<bool> UserInfo_Delete(string id);
     }
 }

@@ -29,3 +29,11 @@ export function GetClaim(roleId) {
     params: { roleId }
   })
 }
+
+export function UpdateClaim(RoleId, ClaimList) {
+  return request({
+    url: '/User/Claim_Update',
+    method: 'post',
+    data: { RoleId, ClaimList }
+  })
+}

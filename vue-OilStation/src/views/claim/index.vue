@@ -10,7 +10,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-dialog title="修改权限" :visible.sync="dialogVisible" width="30%">
+    <el-dialog title="修改声明" :visible.sync="dialogVisible" width="30%">
       <el-tree :data="data" show-checkbox node-key="code" ref="tree"></el-tree>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { GetRoles, GetClaim } from "@/api/authorize";
+import { GetRoles, GetClaim, UpdateClaim } from "@/api/authorize";
 // :default-expanded-keys="[2, 3]"
 // :default-checked-keys="[5]"
 export default {
@@ -59,7 +59,8 @@ export default {
           ]
         }
       ],
-      selectData: []
+      selectData: [],
+      id:""
     };
   },
   created() {
@@ -77,17 +78,23 @@ export default {
     //   });
     // },
     OpenDia(index) {
+      //获取Claim
+      this.id=this.tableData[index].id;
       GetClaim(this.tableData[index].id).then(res => {
         this.selectData = res.data;
         this.dialogVisible = true;
+        //等待
         this.$nextTick(() => {
           this.$refs.tree.setCheckedKeys(this.selectData);
         });
       });
     },
     Update() {
+      UpdateClaim(this.id,this.$refs.tree.getCheckedKeys()).then(res=>{
+        console.log(res)
+      })
       this.dialogVisible = false;
-      console.log(this.$refs.tree.getCheckedKeys());
+      //console.log(this.$refs.tree.getCheckedKeys());
     }
   }
 };

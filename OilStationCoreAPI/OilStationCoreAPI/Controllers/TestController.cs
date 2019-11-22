@@ -30,7 +30,7 @@ namespace OilStationCoreAPI.Controllers
         public async Task<int> reg()
         {
             var user = await _userManager.CreateAsync(new ApplicationUser
-            { UserName = "admin2", Email = "12345678@qq.com", UserSex = "1", BirthDay = Convert.ToDateTime("1999-12-05"), Address = "湖北武汉", Status = 1, CreateTime = DateTime.Now.ToLocalTime(), UpdateTime = DateTime.Now.ToLocalTime(), JobId = "1", OrgId = "1", IsHSEGroup = 0 }, "Qq123.");
+            { UserName = "admin3", Email = "12345678@qq.com", UserSex = "1", BirthDay = Convert.ToDateTime("1999-11-06"), Address = "湖北武汉", Status = 1, CreateTime = DateTime.Now.ToLocalTime(), UpdateTime = DateTime.Now.ToLocalTime(), JobId = "1", OrgId = "1", IsHSEGroup = 0 }, "Qq123.");
             if (user.Succeeded)
             {
                 return 1;

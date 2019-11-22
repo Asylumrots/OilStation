@@ -77,6 +77,28 @@ export const constantRoutes = [
   },
 
   {
+    path: '/info',
+    component: Layout,
+    redirect: '/example/info',
+    name: 'Info',
+    meta: { title: '信息管理', icon: 'drafts' },
+    children: [
+      {
+        path: 'info',
+        name: 'UserInfo',
+        component: () => import('@/views/info/userinfo'),
+        meta: { title: '用户管理', icon: 'mine' }
+      },
+      {
+        path: 'infos',
+        name: 'UserInfo',
+        component: () => import('@/views/info/userinfo'),
+        meta: { title: '用户管理', icon: 'mine' }
+      }
+    ]
+  },
+
+  {
     path: '/example',
     component: Layout,
     redirect: '/example/table',

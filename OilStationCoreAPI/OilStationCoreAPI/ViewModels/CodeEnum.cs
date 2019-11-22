@@ -30,9 +30,35 @@ namespace OilStationCoreAPI.ViewModels
             LoginFaile = 101,
 
             /// <summary>
-            /// 修改用户角色
+            /// 用户角色信息获取失败
             /// </summary>
-            UpdateRole=203,
+            GetUserRoleInfoFail = 601,
+
+            /// <summary>
+            /// 角色信息获取失败
+            /// </summary>
+            GetRoleFail = 602,
+
+            /// <summary>
+            /// 声明信息获取失败
+            /// </summary>
+            GetClaimFail = 603,
+
+            /// <summary>
+            /// 修改用户角色失败
+            /// </summary>
+            UpdateRoleFail = 701,
+
+            /// <summary>
+            /// 修改声明失败
+            /// </summary>
+            UpdateClaimFail = 702,
+
+            /// <summary>
+            /// 修改用户信息失败
+            /// </summary>
+            UpdateUserInfoFail = 703,
+
         }
     }
 }
