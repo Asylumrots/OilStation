@@ -6,6 +6,7 @@
     >
       <el-table-column label="姓名" prop="userName"></el-table-column>
       <el-table-column label="性别" prop="userSex"></el-table-column>
+      <el-table-column label="职位" prop="jobName"></el-table-column>
       <el-table-column label="电话" prop="phoneNumber"></el-table-column>
       <el-table-column label="邮箱" prop="email"></el-table-column>
       <el-table-column label="地址" prop="address"></el-table-column>
@@ -23,7 +24,7 @@
 
       <el-table-column align="right">
         <template slot="header" slot-scope="scope">
-          <el-input v-model="search" size="mini" placeholder="输入用户名搜索" :id="scope"/>
+          <el-input v-model="search" size="mini" placeholder="输入用户名搜索" :id="scope" />
           <!-- <el-button type="success" @click="Add()">添加用户</el-button> -->
         </template>
         <template slot-scope="scope">
@@ -45,6 +46,16 @@
                   <el-radio-button label="男"></el-radio-button>
                   <el-radio-button label="女"></el-radio-button>
                 </el-radio-group>
+              </el-form-item>
+              <el-form-item label="职位：">
+                <el-select v-model="form.job" placeholder="请选择职位">
+                  <el-option
+                    :label="item.name"
+                    :value="item.id"
+                    v-for="item in JobData"
+                    v-bind:key="item.id"
+                  ></el-option>
+                </el-select>
               </el-form-item>
               <el-form-item label="电话" prop="phoneNumber">
                 <el-input v-model="form.phoneNumber"></el-input>
@@ -82,10 +93,12 @@
 <script>
 import { GetUserRole } from "@/api/authorize";
 import { UpdateInfo, DeleteInfo } from "@/api/user";
+import { GetJob } from "@/api/Job";
 export default {
   data() {
     return {
       tableData: [],
+      JobData: [],
       form: {
         id: "",
         userName: "",
@@ -93,26 +106,28 @@ export default {
         phoneNumber: "",
         email: "",
         address: "",
-        birthDay: ""
+        birthDay: "",
+        job: ""
       },
       dialogVisible: false,
       search: "",
       rules: {
         userName: [
-          { required: true, message: "请输入用户名", trigger: "change" }
+          { required: true, message: "请输入用户名", trigger: "blur" }
         ],
-        userSex: [{ required: true, message: "请选择性别", trigger: "change" }],
+        userSex: [{ required: true, message: "请选择性别", trigger: "blur" }],
         phoneNumber: [
-          { required: true, message: "请输入电话号码", trigger: "change" }
+          { required: true, message: "请输入电话号码", trigger: "blur" }
         ],
-        email: [{ required: true, message: "输入邮箱", trigger: "change" }],
-        address: [{ required: true, message: "请输入地址", trigger: "change" }],
+        email: [{ required: true, message: "输入邮箱", trigger: "blur" }],
+        address: [{ required: true, message: "请输入地址", trigger: "blur" }],
         birthDay: [{ required: true, message: "请选择日期", trigger: "change" }]
       }
     };
   },
   created() {
     this.GetUserRole();
+    this.GetJob();
   },
   methods: {
     handleEdit(index, row) {
@@ -126,6 +141,7 @@ export default {
         this.form.address = row.address;
         this.form.email = row.email;
         this.form.birthDay = row.birthDay;
+        this.form.job = String(row.jobId);
       });
     },
     handleDelete(index, row) {
@@ -152,8 +168,14 @@ export default {
         this.tableData = res.data;
       });
     },
+    GetJob() {
+      GetJob().then(res => {
+        this.JobData = res.data;
+      });
+    },
     Update() {
       this.$refs["form"].validate(valid => {
+        //console.log(this.form)
         if (valid) {
           UpdateInfo(this.form).then(res => {
             this.dialogVisible = false;

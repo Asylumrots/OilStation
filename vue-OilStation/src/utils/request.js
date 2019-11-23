@@ -53,6 +53,7 @@ service.interceptors.response.use(
         type: 'success'
       })
     }
+    
     // if the custom code is not 20000, it is judged as an error.
     if (res.code !== 200) {
       console.log("Un200Error---" + res)
@@ -81,6 +82,12 @@ service.interceptors.response.use(
     }
   },
   error => {
+    // if (error.code == 403) {
+    //   Message({
+    //     message: "您并无此权限",
+    //     type: 'error'
+    //   })
+    // }
     console.log('err' + error) // for debug
     Message({
       message: error.message,

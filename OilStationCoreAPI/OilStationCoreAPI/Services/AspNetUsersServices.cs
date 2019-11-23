@@ -38,7 +38,6 @@ namespace OilStationCoreAPI.Services
                         roleName = db.AspNetRoles.Where(x => x.Id == s.RoleId).FirstOrDefault().Name;
                     else
                         roleName = "暂无";
-
                     userRoleViewModel.Id = item.Id;
                     userRoleViewModel.RoleName = roleName;
                     userRoleViewModel.UserName = item.UserName;
@@ -48,7 +47,15 @@ namespace OilStationCoreAPI.Services
                     userRoleViewModel.Email = item.Email;
                     userRoleViewModel.BirthDay = item.BirthDay;
                     userRoleViewModel.Address = item.Address;
-
+                    userRoleViewModel.JobId = item.JobId.ToLower();
+                    var jobList = db.Job;
+                    foreach (var job in jobList)
+                    {
+                        if (job.Id.ToString() == item.JobId.ToLower())
+                        {
+                            userRoleViewModel.JobName = job.Name;
+                        }
+                    }
                     reList.Add(userRoleViewModel);
                 }
                 reList.AsEnumerable();
@@ -79,6 +86,7 @@ namespace OilStationCoreAPI.Services
             userInfo.Email = model.email;
             userInfo.Address = model.address;
             userInfo.BirthDay = model.birthday;
+            userInfo.JobId = model.Job;
             db.AspNetUsers.Update(userInfo);
             int num = db.SaveChanges();
             if (num > 0)

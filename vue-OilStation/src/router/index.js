@@ -90,10 +90,10 @@ export const constantRoutes = [
         meta: { title: '用户管理', icon: 'mine' }
       },
       {
-        path: 'infos',
-        name: 'UserInfo',
-        component: () => import('@/views/info/userinfo'),
-        meta: { title: '用户管理', icon: 'mine' }
+        path: 'job',
+        name: 'Job',
+        component: () => import('@/views/info/job'),
+        meta: { title: '职位管理', icon: 'job' }
       }
     ]
   },

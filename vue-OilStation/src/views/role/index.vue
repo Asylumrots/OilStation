@@ -92,10 +92,9 @@ export default {
       this.form.region = this.tableData[index].roleName;
     },
     UpdateRoles(){
-      //console.log(this.userID+"---"+this.form.region);
+      //console.log(this.form);
       this.dialogVisible = false
       UpdateRoles(this.userID,this.form.region).then(res=>{
-        console.log(res);
         //刷新数据
         this.GetData();
         this.GetRoles();

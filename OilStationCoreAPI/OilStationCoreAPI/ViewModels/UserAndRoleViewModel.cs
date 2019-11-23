@@ -14,6 +14,8 @@ namespace OilStationCoreAPI.ViewModels
         public string UserSex { get; set; }
         public DateTime? BirthDay { get; set; }
         public string Address { get; set; }
+        public string JobId { get; set; }
+        public string JobName { get; set; }
 
         public string RoleName { get; set; }
     }
