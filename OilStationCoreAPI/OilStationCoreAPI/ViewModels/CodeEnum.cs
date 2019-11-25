@@ -53,12 +53,31 @@ namespace OilStationCoreAPI.ViewModels
             /// 修改声明失败
             /// </summary>
             UpdateClaimFail = 702,
-
+            
             /// <summary>
             /// 修改用户信息失败
             /// </summary>
             UpdateUserInfoFail = 703,
 
+            /// <summary>
+            /// 修改职位信息失败
+            /// </summary>
+            UpdateJobFail = 704,
+
+            /// <summary>
+            /// 删除用户失败
+            /// </summary>
+            DeleteUserFail=801,
+            
+            /// <summary>
+            /// 删除职位失败
+            /// </summary>
+            DeleteJobFail=802,
+
+            /// <summary>
+            /// 添加职位失败
+            /// </summary>
+            AddJobFail=901,
         }
     }
 }

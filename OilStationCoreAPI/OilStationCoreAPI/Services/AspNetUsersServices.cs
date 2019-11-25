@@ -114,11 +114,20 @@ namespace OilStationCoreAPI.Services
             var userInfo = db.AspNetUsers.Where(x => x.Id == id).FirstOrDefault();
             db.AspNetUsers.Remove(userInfo);
             int num = db.SaveChanges();
+            if (num>0)
+            {
+                return new ResponseModel<bool>
+                {
+                    code = (int)code.Success,
+                    data = true,
+                    message = "删除用户成功"
+                };
+            }
             return new ResponseModel<bool>
             {
-                code = (int)code.Success,
+                code = (int)code.DeleteUserFail,
                 data = false,
-                message = "删除用户成功"
+                message = "删除用户失败"
             };
         }
     }

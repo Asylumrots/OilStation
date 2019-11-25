@@ -10,5 +10,11 @@ namespace OilStationCoreAPI.IServices
     public interface IJobServices
     {
         ResponseModel<IEnumerable<Job>> Job_Get();
+
+        ResponseModel<bool> Job_Update(JobViewModel model);
+
+        ResponseModel<bool> Job_Delete(string id);
+
+        ResponseModel<bool> Job_Add(JobViewModel model);
     }
 }
