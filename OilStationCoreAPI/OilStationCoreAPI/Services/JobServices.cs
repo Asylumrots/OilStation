@@ -70,5 +70,7 @@ namespace OilStationCoreAPI.Services
             }
             return new ResponseModel<bool> { code = (int)code.AddJobFail, data = false, message = "添加职位信息失败" };
         }
+
+        
     }
 }

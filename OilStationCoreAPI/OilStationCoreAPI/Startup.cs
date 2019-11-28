@@ -195,6 +195,10 @@ namespace OilStationCoreAPI
             services.AddSingleton<IAspNetUsersServices, AspNetUsersServices>();
             services.AddSingleton<IAspNetRolesServices, AspNetRolesServices>();
             services.AddSingleton<IJobServices, JobServices>();
+            services.AddSingleton<IOrganizationServices, OrganizationServices>();
+            services.AddSingleton<IEntryServices, EntryServices>();
+            services.AddSingleton<ILeaveServices, LeaveServices>();
+            services.AddSingleton<IOilServices, OilServices>();
             #endregion
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

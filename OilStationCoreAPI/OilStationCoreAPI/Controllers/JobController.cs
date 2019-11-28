@@ -26,6 +26,12 @@ namespace OilStationCoreAPI.Controllers
             return _jobServices.Job_Get();
         }
 
+        [HttpPost]
+        public ResponseModel<bool> Job_Add([FromBody]JobViewModel model)
+        {
+            return _jobServices.Job_Add(model);
+        }
+
         [HttpPut]
         public ResponseModel<bool> Job_Update([FromBody]JobViewModel model)
         {
@@ -38,10 +44,6 @@ namespace OilStationCoreAPI.Controllers
             return _jobServices.Job_Delete(id);
         }
 
-        [HttpPost]
-        public ResponseModel<bool> Job_Add([FromBody]JobViewModel model)
-        {
-            return _jobServices.Job_Add(model);
-        }
+        
     }
 }

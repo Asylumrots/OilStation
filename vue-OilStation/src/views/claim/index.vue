@@ -32,29 +32,29 @@ export default {
       data: [
         {
           code: "Roles",
-          label: "用户角色",
+          label: "用户角色管理",
           children: [
             {
               code: "Roles_Get",
-              label: "查看"
+              label: "查看信息"
             },
             {
               code: "Roles_Update",
-              label: "修改"
+              label: "修改信息"
             }
           ]
         },
         {
           code: "Claim",
-          label: "角色声明",
+          label: "角色声明管理",
           children: [
             {
               code: "Claim_Get",
-              label: "查看"
+              label: "查看信息"
             },
             {
               code: "Claim_Update",
-              label: "修改"
+              label: "修改信息"
             }
           ]
         }

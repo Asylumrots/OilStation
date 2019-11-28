@@ -18,6 +18,7 @@ using static OilStationCoreAPI.ViewModels.CodeEnum;
 namespace OilStationCoreAPI.Controllers
 {
     [Route("api/[controller]/[action]")]
+    [ApiController]
     public class UserController : ControllerBase
     {
         public UserController(IAspNetUsersServices aspNetUsersServices, IAspNetRolesServices aspNetRolesServices, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager)

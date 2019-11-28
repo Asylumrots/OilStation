@@ -94,6 +94,12 @@ export const constantRoutes = [
         name: 'Job',
         component: () => import('@/views/info/job'),
         meta: { title: '职位管理', icon: 'job' }
+      },
+      {
+        path: 'organization',
+        name: 'Organization',
+        component: () => import('@/views/info/organization'),
+        meta: { title: '组织管理', icon: 'tree' }
       }
     ]
   },
@@ -103,32 +109,53 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/example/table',
     name: 'Example',
-    meta: { title: '例子', icon: 'example' },
+    meta: { title: '油站申请', icon: 'into' },
     children: [
       {
-        path: 'table',
-        name: 'Table',
-        component: () => import('@/views/table/index'),
-        meta: { title: 'Table', icon: 'table' }
+        path: 'entry',
+        name: 'Entry',
+        component: () => import('@/views/entry/index'),
+        meta: { title: '员工入职申请', icon: 'add' }
       },
       {
         path: 'tree',
         name: 'Tree',
         component: () => import('@/views/tree/index'),
-        meta: { title: 'Tree', icon: 'tree' }
+        meta: { title: '员工离职申请', icon: 'close' }
+      },
+      {
+        path: 'tree2',
+        name: 'Tree2',
+        component: () => import('@/views/tree/index'),
+        meta: { title: '油料申请', icon: 'remind' }
       }
     ]
   },
 
   {
-    path: '/form',
+    path: '/example1',
     component: Layout,
+    redirect: '/example/table',
+    name: 'Example1',
+    meta: { title: '油站审批', icon: 'write' },
     children: [
       {
-        path: 'index',
-        name: 'Form',
-        component: () => import('@/views/form/index'),
-        meta: { title: '表单', icon: 'form' }
+        path: 'table3',
+        name: 'Table3',
+        component: () => import('@/views/table/index'),
+        meta: { title: '员工入职审批', icon: 'complete' }
+      },
+      {
+        path: 'tree3',
+        name: 'Tree3',
+        component: () => import('@/views/tree/index'),
+        meta: { title: '员工离职审批', icon: 'complete' }
+      },
+      {
+        path: 'tree4',
+        name: 'Tree4',
+        component: () => import('@/views/tree/index'),
+        meta: { title: '油料审批', icon: 'complete' }
       }
     ]
   },

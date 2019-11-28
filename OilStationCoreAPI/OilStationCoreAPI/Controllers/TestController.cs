@@ -14,6 +14,7 @@ using OilStationCoreAPI.IdentityModel;
 namespace OilStationCoreAPI.Controllers
 {
     [Route("api/[controller]/[action]")]
+    [ApiController]
     //测试
     public class TestController : ControllerBase
     {

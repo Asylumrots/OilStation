@@ -65,6 +65,11 @@ namespace OilStationCoreAPI.ViewModels
             UpdateJobFail = 704,
 
             /// <summary>
+            /// 修改机构信息失败
+            /// </summary>
+            UpdateOrganizationFail=705,
+
+            /// <summary>
             /// 删除用户失败
             /// </summary>
             DeleteUserFail=801,
@@ -75,9 +80,19 @@ namespace OilStationCoreAPI.ViewModels
             DeleteJobFail=802,
 
             /// <summary>
+            /// 删除机构失败
+            /// </summary>
+            DeleteOrganizationFail=803,
+
+            /// <summary>
             /// 添加职位失败
             /// </summary>
             AddJobFail=901,
+
+            /// <summary>
+            /// 添加机构失败
+            /// </summary>
+            AddOrganizationFail=902,
         }
     }
 }

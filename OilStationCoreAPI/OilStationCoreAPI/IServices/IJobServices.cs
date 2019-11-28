@@ -16,5 +16,6 @@ namespace OilStationCoreAPI.IServices
         ResponseModel<bool> Job_Delete(string id);
 
         ResponseModel<bool> Job_Add(JobViewModel model);
+
     }
 }
