@@ -70,6 +70,21 @@ namespace OilStationCoreAPI.ViewModels
             UpdateOrganizationFail=705,
 
             /// <summary>
+            /// 审核入职信息失败
+            /// </summary>
+            UpdateCheckEntryFail=706,
+
+            /// <summary>
+            /// 审核离职信息失败
+            /// </summary>
+            UpdaateCheckLeaveFail=707,
+
+            /// <summary>
+            /// 审核油料订单失败
+            /// </summary>
+            UpdateCheckOilOrderFail=708,
+
+            /// <summary>
             /// 删除用户失败
             /// </summary>
             DeleteUserFail=801,
@@ -85,6 +100,21 @@ namespace OilStationCoreAPI.ViewModels
             DeleteOrganizationFail=803,
 
             /// <summary>
+            /// 删除入职信息失败
+            /// </summary>
+            DeleteEntryFail=804,
+
+            /// <summary>
+            /// 删除离职信息失败
+            /// </summary>
+            DeleteLeaveFail=805,
+
+            /// <summary>
+            /// 删除油料订单失败
+            /// </summary>
+            DeleteOilOrderFail=806,
+
+            /// <summary>
             /// 添加职位失败
             /// </summary>
             AddJobFail=901,
@@ -93,6 +123,21 @@ namespace OilStationCoreAPI.ViewModels
             /// 添加机构失败
             /// </summary>
             AddOrganizationFail=902,
+
+            /// <summary>
+            /// 添加入职信息失败
+            /// </summary>
+            AddEntryFail=903,
+
+            /// <summary>
+            /// 添加离职信息失败
+            /// </summary>
+            AddLeaveFail=904,
+
+            /// <summary>
+            /// 添加油料订单失败
+            /// </summary>
+            AddOilOrderFail=905,
         }
     }
 }

@@ -8,9 +8,13 @@ namespace OilStationCoreAPI.IServices
 {
     public interface ILeaveServices
     {
-        ResponseModel<List<EntryViewModel>> Leave_Get();
+        ResponseModel<List<LeaveViewModel>> Leave_Get();
 
-        ResponseModel<bool> Leave_Add(EntryViewModel model);
+        ResponseModel<List<LeaveViewModel>> Leave_CheckGet();
+
+        ResponseModel<bool> Leave_Add(LeaveViewModel model);
+
+        ResponseModel<bool> Leave_Check(CheckViewModel model);
 
         ResponseModel<bool> Leave_Delete(string id);
     }

@@ -22,14 +22,14 @@
         </template>
       </el-table-column>
 
-      <el-table-column align="right">
+      <el-table-column align="right" width="200%">
         <template slot="header" slot-scope="scope">
           <el-input v-model="search" size="mini" placeholder="输入用户名搜索" :id="scope" />
           <!-- <el-button type="success" @click="Add()">添加用户</el-button> -->
         </template>
         <template slot-scope="scope">
-          <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-          <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+          <el-button type="primary"  @click="handleEdit(scope.$index, scope.row)" icon="el-icon-edit"></el-button>
+          <el-button type="danger" @click="handleDelete(scope.$index, scope.row)" icon="el-icon-delete"></el-button>
         </template>
       </el-table-column>
     </el-table>

@@ -2,9 +2,9 @@
   <div>
     <div style="margin:25px">
       <el-input placeholder="输入关键字进行过滤" v-model="filterText" style="width:450px"></el-input>
-      <el-button type="success" plain @click="Add">添加子机构</el-button>
-      <el-button type="primary" plain @click="Update">修改机构</el-button>
-      <el-button type="danger" plain @click="Del">删除机构</el-button>
+      <el-button type="success" plain @click="Add" icon="el-icon-plus">添加子机构</el-button>
+      <el-button type="primary" plain @click="Update" icon="el-icon-edit">修改机构</el-button>
+      <el-button type="danger" plain @click="Del" icon="el-icon-delete">删除机构</el-button>
     </div>
     <el-tree
       :data="data"

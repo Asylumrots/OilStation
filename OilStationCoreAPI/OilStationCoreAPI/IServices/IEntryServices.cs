@@ -10,8 +10,12 @@ namespace OilStationCoreAPI.IServices
     {
         ResponseModel<List<EntryViewModel>> Entry_Get();
 
+        ResponseModel<List<EntryViewModel>> Entry_CheckGet();
+
         ResponseModel<bool> Entry_Add(EntryViewModel model);
 
         ResponseModel<bool> Entry_Delete(string id);
+
+        ResponseModel<bool> Entry_Check(CheckViewModel model);
     }
 }

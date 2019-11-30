@@ -21,15 +21,27 @@ namespace OilStationCoreAPI.Controllers
         }
 
         [HttpGet]
-        public ResponseModel<List<EntryViewModel>> Leave_Get()
+        public ResponseModel<List<LeaveViewModel>> Leave_Get()
         {
             return _leaveServices.Leave_Get();
         }
 
+        [HttpGet]
+        public ResponseModel<List<LeaveViewModel>> Leave_CheckGet()
+        {
+            return _leaveServices.Leave_CheckGet();
+        }
+
         [HttpPost]
-        public ResponseModel<bool> Leave_Add([FromBody]EntryViewModel model)
+        public ResponseModel<bool> Leave_Add([FromBody]LeaveViewModel model)
         {
             return _leaveServices.Leave_Add(model);
+        }
+
+        [HttpPut]
+        public ResponseModel<bool> Leave_Check([FromBody]CheckViewModel model)
+        {
+            return _leaveServices.Leave_Check(model);
         }
 
         [HttpDelete]

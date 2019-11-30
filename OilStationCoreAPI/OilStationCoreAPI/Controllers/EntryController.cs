@@ -27,10 +27,22 @@ namespace OilStationCoreAPI.Controllers
             return _entryServices.Entry_Get();
         }
 
+        [HttpGet]
+        public ResponseModel<List<EntryViewModel>> Entry_CheckGet()
+        {
+            return _entryServices.Entry_CheckGet();
+        }
+
         [HttpPost]
         public ResponseModel<bool> Entry_Add([FromBody]EntryViewModel model)
         {
             return _entryServices.Entry_Add(model);
+        }
+
+        [HttpPut]
+        public ResponseModel<bool> Entry_Check([FromBody]CheckViewModel model)
+        {
+            return _entryServices.Entry_Check(model);
         }
 
         [HttpDelete]

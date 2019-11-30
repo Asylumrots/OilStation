@@ -11,11 +11,11 @@
       <el-table-column align="right">
         <template slot="header">
           <!-- <el-input v-model="search" placeholder="输入职位搜索" :id="scope"/> slot-scope="scope" -->
-          <el-button type="success" @click="AddDia()">添加</el-button>
+          <el-button type="success" @click="AddDia()" plain icon="el-icon-plus">添加职位</el-button>
         </template>
         <template slot-scope="scope">
-          <el-button @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-          <el-button type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+          <el-button type="primary" @click="handleEdit(scope.$index, scope.row)" icon="el-icon-edit" plain>编辑</el-button>
+          <el-button type="danger" @click="handleDelete(scope.$index, scope.row)" icon="el-icon-delete" plain>删除</el-button>
         </template>
       </el-table-column>
     </el-table>

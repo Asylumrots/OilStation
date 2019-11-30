@@ -9,7 +9,7 @@ namespace OilStationCoreAPI.ViewModels
     {
         public string Id { get; set; }
         public string StaffName { get; set; }
-        public int Sex { get; set; }
+        public string Sex { get; set; }
         public DateTime BirthDay { get; set; }
         public string Address { get; set; }
         public string Email { get; set; }
@@ -19,6 +19,11 @@ namespace OilStationCoreAPI.ViewModels
         public DateTime EntryDate { get; set; }
         public string CreateStaffeId { get; set; }
         public DateTime CreateTime { get; set; }
+        public string WorkNumber { get; set; }
+        //审核信息
+        public string Title { get; set; }
+        //审核
+        public string No { get; set; }
         public bool IsDel { get; set; } 
     }
 }
