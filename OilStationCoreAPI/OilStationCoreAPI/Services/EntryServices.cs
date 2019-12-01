@@ -52,7 +52,12 @@ namespace OilStationCoreAPI.Services
                 entry.IsDel = item.IsDel;
                 reList.Add(entry);
             }
-            return new ResponseModel<List<EntryViewModel>> { code = (int)code.Success, data = reList, message = "获取入职信息成功" };
+            return new ResponseModel<List<EntryViewModel>>
+            {
+                code = (int)code.Success,
+                data = reList,
+                message = ""//获取入职信息成功
+            };
         }
 
         public ResponseModel<List<EntryViewModel>> Entry_CheckGet()
@@ -81,7 +86,12 @@ namespace OilStationCoreAPI.Services
                 entry.IsDel = item.IsDel;
                 reList.Add(entry);
             }
-            return new ResponseModel<List<EntryViewModel>> { code = (int)code.Success, data = reList, message = "获取未审核入职信息成功" };
+            return new ResponseModel<List<EntryViewModel>>
+            {
+                code = (int)code.Success,
+                data = reList,
+                message = ""//获取未审核入职信息成功
+            };
         }
 
         public ResponseModel<bool> Entry_Add(EntryViewModel item)

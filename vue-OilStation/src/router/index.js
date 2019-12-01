@@ -124,9 +124,9 @@ export const constantRoutes = [
         meta: { title: '员工离职申请', icon: 'close' }
       },
       {
-        path: 'tree2',
-        name: 'Tree2',
-        component: () => import('@/views/tree/index'),
+        path: 'oil',
+        name: 'Oil',
+        component: () => import('@/views/oil/index'),
         meta: { title: '油料申请', icon: 'remind' }
       }
     ]
@@ -152,9 +152,9 @@ export const constantRoutes = [
         meta: { title: '员工离职审批', icon: 'complete' }
       },
       {
-        path: 'tree4',
-        name: 'Tree4',
-        component: () => import('@/views/tree/index'),
+        path: 'oil',
+        name: 'oilCheck',
+        component: () => import('@/views/oil/check'),
         meta: { title: '油料审批', icon: 'complete' }
       }
     ]

@@ -98,7 +98,7 @@ namespace OilStationCoreAPI.Controllers
             {
                 code = (int)code.Success,
                 data = new { name = user.UserName, avatar = "https://localhost:44395/img/default.png" },
-                message = "信息获取成功"
+                message = ""//信息获取成功
             });
         }
 
@@ -111,7 +111,7 @@ namespace OilStationCoreAPI.Controllers
         };
 
         [HttpGet]
-        //[Authorize(Policy = "Roles_Get")]
+        [Authorize(Policy = "Roles_Get")]
         public ResponseModel<IEnumerable<UserAndRoleViewModel>> UserRole_Get()
         {
             return _aspNetUsersServices.UserRole_Get();
@@ -132,12 +132,14 @@ namespace OilStationCoreAPI.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = "Claim_Get")]
         public ResponseModel<IEnumerable<string>> Claim_Get(string RoleId)
         {
             return _aspNetRolesServices.Claim_Get(RoleId);
         }
 
         [HttpPost]
+        [Authorize(Policy = "Claim_Update")]
         public ResponseModel<bool> Claim_Update([FromBody]ClaimViewModel model)
         {
             return _aspNetRolesServices.Claim_Update(model);
@@ -150,12 +152,14 @@ namespace OilStationCoreAPI.Controllers
         //}
 
         [HttpPut]
+        [Authorize(Policy = "UserInfo_Update")]
         public ResponseModel<bool> UserInfo_Update([FromBody]UserInfoViewModel model)
         {
             return _aspNetUsersServices.UserInfo_Update(model);
         }
 
         [HttpDelete]
+        [Authorize(Policy = "UserInfo_Delete")]
         public ResponseModel<bool> UserInfo_Delete(string id)
         {
             return _aspNetUsersServices.UserInfo_Delete(id);

@@ -47,12 +47,23 @@ service.interceptors.response.use(
   response => {
     const res = response.data
     console.log(res)
-    if (res.code == 200 && res.message != null) {
+    if (res.code == 200 && res.message != "") {
       Message({
         message: res.message,
         type: 'success'
       })
     }
+    // if(res.code==403){
+    //   MessageBox.confirm('您没有权限访问此页面', '确认', {
+    //     confirmButtonText: '退出',
+    //     cancelButtonText: '取消',
+    //     type: 'warning'
+    //   }).then(() => {
+    //     store.dispatch('user/logout').then(() => {
+    //       location.reload()
+    //     })
+    //   })
+    // }
     
     // if the custom code is not 20000, it is judged as an error.
     if (res.code !== 200) {
@@ -82,13 +93,14 @@ service.interceptors.response.use(
     }
   },
   error => {
-    // if (error.code == 403) {
-    //   Message({
-    //     message: "您并无此权限",
-    //     type: 'error'
-    //   })
-    // }
     console.log('err' + error) // for debug
+    if (error.message.substring(32,35) == "403") {
+      Message({
+        message: "您并无此权限",
+        type: 'error'
+      })
+      return Promise.reject(error)
+    }
     Message({
       message: error.message,
       type: 'error',

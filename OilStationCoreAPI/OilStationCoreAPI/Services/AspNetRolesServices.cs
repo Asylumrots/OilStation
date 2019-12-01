@@ -43,7 +43,7 @@ namespace OilStationCoreAPI.Services
             {
                 code = (int)code.Success,
                 data = reList,
-                message = "角色信息获取成功"
+                message = ""//角色信息获取成功
             };
         }
 
@@ -108,7 +108,7 @@ namespace OilStationCoreAPI.Services
             {
                 code = (int)code.Success,
                 data = reList,
-                message = "声明信息获取成功"
+                message = ""//声明信息获取成功
             };
         }
 

@@ -16,7 +16,12 @@ namespace OilStationCoreAPI.Services
         public ResponseModel<IEnumerable<Job>> Job_Get()
         {
             var list = db.Job.AsEnumerable();
-            return new ResponseModel<IEnumerable<Job>> { code = (int)code.Success, data = list, message = "获取职位信息成功" };
+            return new ResponseModel<IEnumerable<Job>>
+            {
+                code = (int)code.Success,
+                data = list,
+                message = ""//获取职位信息成功
+            };
         }
 
         public ResponseModel<bool> Job_Update(JobViewModel model)
@@ -70,6 +75,6 @@ namespace OilStationCoreAPI.Services
             }
             return new ResponseModel<bool> { code = (int)code.AddJobFail, data = false, message = "添加职位信息失败" };
         }
-        
+
     }
 }

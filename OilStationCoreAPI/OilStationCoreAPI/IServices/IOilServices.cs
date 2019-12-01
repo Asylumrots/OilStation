@@ -8,9 +8,13 @@ namespace OilStationCoreAPI.IServices
 {
     public interface IOilServices
     {
-        ResponseModel<List<EntryViewModel>> OilOrder_Get();
+        ResponseModel<List<OilOrderViewModel>> OilOrder_Get();
 
-        ResponseModel<bool> OilOrder_Add(EntryViewModel model);
+        ResponseModel<List<OilOrderViewModel>> OilOrder_CheckGet();
+
+        ResponseModel<bool> OilOrder_Add(OilOrderViewModel model);
+
+        ResponseModel<bool> OilOrder_Check(CheckViewModel model);
 
         ResponseModel<bool> OilOrder_Delete(string id);
     }

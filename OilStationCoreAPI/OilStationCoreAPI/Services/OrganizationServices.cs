@@ -24,7 +24,12 @@ namespace OilStationCoreAPI.Services
             model.children = list;
             List<OrganizationViewModel> relist = new List<OrganizationViewModel>();
             relist.Add(model);
-            return new ResponseModel<List<OrganizationViewModel>> { code = (int)code.Success, data = relist, message = "获取站点信息成功" };
+            return new ResponseModel<List<OrganizationViewModel>>
+            {
+                code = (int)code.Success,
+                data = relist,
+                message = ""//获取站点信息成功
+            };
         }
 
         public List<OrganizationViewModel> get(string paid)
