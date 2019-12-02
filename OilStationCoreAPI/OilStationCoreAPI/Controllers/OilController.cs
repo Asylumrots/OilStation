@@ -42,14 +42,14 @@ namespace OilStationCoreAPI.Controllers
             return _oilServices.OilOrder_Add(model);
         }
 
-        [HttpPut]
+        [HttpPost]
         [Authorize(Policy = "OilOrder_Check")]
         public ResponseModel<bool> OilOrder_Check([FromBody]CheckViewModel model)
         {
             return _oilServices.OilOrder_Check(model);
         }
 
-        [HttpDelete]
+        [HttpPost]
         [Authorize(Policy = "OilOrder_Delete")]
         public ResponseModel<bool> OilOrder_Delete(string id)
         {

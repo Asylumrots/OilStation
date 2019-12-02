@@ -91,8 +91,7 @@
 </template>
 
 <script>
-import { GetUserRole } from "@/api/authorize";
-import { UpdateInfo, DeleteInfo } from "@/api/user";
+import { UpdateInfo, DeleteInfo,GetUserInfo } from "@/api/user";
 import { GetJob } from "@/api/Job";
 export default {
   data() {
@@ -164,7 +163,7 @@ export default {
         });
     },
     GetUserRole() {
-      GetUserRole().then(res => {
+      GetUserInfo().then(res => {
         this.tableData = res.data;
       });
     },

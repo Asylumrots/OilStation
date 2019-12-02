@@ -23,10 +23,18 @@ export function logout() {
   })
 }
 
+
+export function GetUserInfo() {
+  return request({
+    url: '/User/UserInfo_Get',
+    method: 'get'
+  })
+}
+
 export function UpdateInfo(model) {
   return request({
     url: '/User/UserInfo_Update',
-    method: 'put',
+    method: 'post',
     data: model
   })
 }
@@ -34,7 +42,7 @@ export function UpdateInfo(model) {
 export function DeleteInfo(id) {
   return request({
     url: '/User/UserInfo_Delete',
-    method: 'delete',
+    method: 'post',
     params:{id}
   })
 }

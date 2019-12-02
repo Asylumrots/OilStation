@@ -124,7 +124,7 @@ namespace OilStationCoreAPI.Controllers
             return _aspNetRolesServices.Roles_Get();
         }
 
-        [HttpPut]
+        [HttpPost]
         [Authorize(Policy = "Roles_Update")]
         public ResponseModel<bool> Roles_Update([FromBody]UserRolesViewModel model)
         {
@@ -151,14 +151,22 @@ namespace OilStationCoreAPI.Controllers
         //    return 
         //}
 
-        [HttpPut]
+        [HttpGet]
+        [Authorize(Policy = "UserInfo_Get")]
+        public ResponseModel<IEnumerable<UserAndRoleViewModel>> UserInfo_Get()
+        {
+            return _aspNetUsersServices.UserRole_Get();
+        }
+
+
+        [HttpPost]
         [Authorize(Policy = "UserInfo_Update")]
         public ResponseModel<bool> UserInfo_Update([FromBody]UserInfoViewModel model)
         {
             return _aspNetUsersServices.UserInfo_Update(model);
         }
 
-        [HttpDelete]
+        [HttpPost]
         [Authorize(Policy = "UserInfo_Delete")]
         public ResponseModel<bool> UserInfo_Delete(string id)
         {

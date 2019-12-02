@@ -35,14 +35,14 @@ namespace OilStationCoreAPI.Controllers
             return _jobServices.Job_Add(model);
         }
 
-        [HttpPut]
+        [HttpPost]
         [Authorize(Policy = "Job_Update")]
         public ResponseModel<bool> Job_Update([FromBody]JobViewModel model)
         {
             return _jobServices.Job_Update(model);
         }
 
-        [HttpDelete]
+        [HttpPost]
         [Authorize(Policy = "Job_Delete")]
         public ResponseModel<bool> Job_Delete(string id)
         {

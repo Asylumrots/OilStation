@@ -43,14 +43,14 @@ namespace OilStationCoreAPI.Controllers
             return _entryServices.Entry_Add(model);
         }
 
-        [HttpPut]
+        [HttpPost]
         [Authorize(Policy = "Entry_Check")]
         public ResponseModel<bool> Entry_Check([FromBody]CheckViewModel model)
         {
             return _entryServices.Entry_Check(model);
         }
 
-        [HttpDelete]
+        [HttpPost]
         [Authorize(Policy = "Entry_Delete")]
         public ResponseModel<bool> Entry_Delete(string id)
         {

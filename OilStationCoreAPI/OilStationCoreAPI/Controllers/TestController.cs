@@ -93,5 +93,26 @@ namespace OilStationCoreAPI.Controllers
             TokenModelJwt model = JwtHelper.SerilaizeJwt(token);
             return model;
         }
+
+        [HttpGet]
+        public string Get()
+        {
+            return "get";
+        }
+        [HttpPost]
+        public string Post()
+        {
+            return "post";
+        }
+        [HttpPut]
+        public string Put()
+        {
+            return "put";
+        }
+        [HttpDelete]
+        public string Delete()
+        {
+            return "delete";
+        }
     }
 }

@@ -56,7 +56,7 @@ namespace OilStationCoreAPI
                     // 支持多个域名端口，注意端口号后不要带/斜杆：比如localhost:8000/，是错的
                     // 注意，http://127.0.0.1:1818 和 http://localhost:1818 是不一样的，尽量写两个
                     policy
-                    .WithOrigins("http://192.168.1.238:8080")
+                    .WithOrigins("http://47.102.210.25:60", "http://47.102.210.25:20", "http://172.17.25.167:60", "http://172.17.25.167:20", "http://localhost:9528")
                     .AllowAnyHeader()//Ensures that the policy allows any header.
                     .AllowAnyMethod().AllowCredentials();
                     //.WithExposedHeaders("Token-Expired");
@@ -148,6 +148,7 @@ namespace OilStationCoreAPI
                 options.AddPolicy("Claim_Get", policy => policy.RequireClaim("Claim", "Get"));
                 options.AddPolicy("Claim_Update", policy => policy.RequireClaim("Claim", "Update"));
 
+                options.AddPolicy("UserInfo_Get", policy => policy.RequireClaim("UserInfo", "Get"));
                 options.AddPolicy("UserInfo_Update", policy => policy.RequireClaim("UserInfo", "Update"));
                 options.AddPolicy("UserInfo_Delete", policy => policy.RequireClaim("UserInfo", "Delete"));
 
@@ -255,7 +256,7 @@ namespace OilStationCoreAPI
 
             #region 添加跨域
             //添加跨域
-            app.UseCors("AllowCors");
+            app.UseCors("LimitCors");
 
             //app.UseHttpsRedirection().UseCors(builder =>
             //builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());

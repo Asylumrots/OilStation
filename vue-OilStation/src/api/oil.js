@@ -17,7 +17,7 @@ export function GetOilOrderCheck() {
 export function CheckOilOrder(model) {
   return request({
     url: '/Oil/OilOrder_Check',
-    method: 'put',
+    method: 'post',
     data: model
   })
 }
@@ -25,7 +25,7 @@ export function CheckOilOrder(model) {
 export function DeleteOilOrder(id) {
   return request({
     url: '/Oil/OilOrder_Delete',
-    method: 'delete',
+    method: 'post',
     params: {id}
   })
 }

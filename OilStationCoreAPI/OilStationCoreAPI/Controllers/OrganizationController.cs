@@ -35,14 +35,14 @@ namespace OilStationCoreAPI.Controllers
             return _organizationServices.Organ_Add(model);
         }
 
-        [HttpPut]
+        [HttpPost]
         [Authorize(Policy = "Organization_Update")]
         public ResponseModel<bool> Organization_Update([FromBody]OrganizationAddViewModel model)
         {
             return _organizationServices.Organ_Update(model);
         }
 
-        [HttpDelete]
+        [HttpPost]
         [Authorize(Policy = "Organization_Delete")]
         public ResponseModel<bool> Organization_Delete(string id)
         {

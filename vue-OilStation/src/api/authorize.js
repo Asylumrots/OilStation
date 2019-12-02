@@ -17,7 +17,7 @@ export function GetRoles() {
 export function UpdateRoles(userId, roleId) {
   return request({
     url: '/User/Roles_Update',
-    method: 'put',
+    method: 'post',
     data: { userId, roleId }
   })
 }

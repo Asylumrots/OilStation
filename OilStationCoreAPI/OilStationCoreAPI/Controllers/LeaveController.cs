@@ -42,14 +42,14 @@ namespace OilStationCoreAPI.Controllers
             return _leaveServices.Leave_Add(model);
         }
 
-        [HttpPut]
+        [HttpPost]
         [Authorize(Policy = "Leave_Check")]
         public ResponseModel<bool> Leave_Check([FromBody]CheckViewModel model)
         {
             return _leaveServices.Leave_Check(model);
         }
 
-        [HttpDelete]
+        [HttpPost]
         [Authorize(Policy = "Leave_Delete")]
         public ResponseModel<bool> Leave_Delete(string id)
         {
