@@ -64,7 +64,7 @@ service.interceptors.response.use(
     //     })
     //   })
     // }
-    
+
     // if the custom code is not 20000, it is judged as an error.
     if (res.code !== 200) {
       console.log("Un200Error---" + res)
@@ -94,12 +94,34 @@ service.interceptors.response.use(
   },
   error => {
     console.log('err' + error) // for debug
-    if (error.message.substring(32,35) == "403") {
+    //error.message.substring(32,35) == "403"
+    if (error.response.status == 403) {
       Message({
         message: "您并无此权限",
         type: 'error'
       })
       return Promise.reject(error)
+    } else if (error.response.status == 401) {
+      return store
+        .dispatch("user/refreshToken", getToken())
+        .then(() => {
+          // Message({
+          //   message: "令牌刷新成功",
+          //   type: 'success',
+          //   duration: 5 * 1000
+          // })
+          //error.config.isRetryRequest = true;
+          //error.config.headers.Authorization = 'Bearer ' + getToken();
+          return service(error.config);
+        })
+        .catch(() => {
+          Message({
+            message: error.message,
+            type: 'error',
+            duration: 5 * 1000
+          })
+          return Promise.reject(error)
+        });
     }
     Message({
       message: error.message,

@@ -138,6 +138,16 @@ namespace OilStationCoreAPI.ViewModels
             /// 添加油料订单失败
             /// </summary>
             AddOilOrderFail=905,
+
+            /// <summary>
+            /// Token过期
+            /// </summary>
+            TokenExpired=1002,
+
+            /// <summary>
+            /// Token错误
+            /// </summary>
+            TokenError=1001,
         }
     }
 }

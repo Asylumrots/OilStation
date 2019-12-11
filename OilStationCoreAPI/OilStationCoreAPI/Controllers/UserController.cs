@@ -21,6 +21,7 @@ namespace OilStationCoreAPI.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
+        //依赖注入
         public UserController(IAspNetUsersServices aspNetUsersServices, IAspNetRolesServices aspNetRolesServices, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager)
         {
             this._aspNetUsersServices = aspNetUsersServices;
@@ -36,7 +37,11 @@ namespace OilStationCoreAPI.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
 
-        // POST api/<controller>
+        /// <summary>
+        /// 登录
+        /// </summary>
+        /// <param name="loginViewModel"></param>
+        /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
         public async Task<ResponseModel<string>> Login([FromBody]LoginViewModel loginViewModel)
@@ -88,20 +93,87 @@ namespace OilStationCoreAPI.Controllers
             };
         }
 
+        /// <summary>
+        /// 获取用户信息
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns></returns>
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> Info(string token)
         {
             TokenModelJwt model = JwtHelper.SerilaizeJwt(token);
             var user = await _userManager.FindByIdAsync(model.Uid);
+            string image = Tool.ImageBase64.ImageToBase64("\\wwwroot\\img\\default.png");
             return Ok(new
             {
                 code = (int)code.Success,
-                data = new { name = user.UserName, avatar = "https://localhost:44395/img/default.png" },
+                data = new { name = user.UserName, avatar = image },//https://localhost:44395/img/default.png
                 message = ""//信息获取成功
             });
         }
 
+        /// <summary>
+        /// 刷新token
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ResponseModel<string>> RefreshToken(string token)
+        {
+            if (string.IsNullOrEmpty(token))
+            {
+                return new ResponseModel<string>
+                {
+                    code = (int)code.TokenError,
+                    message = "会话错误"
+                };
+            }
+            string newToken = "";
+            try
+            {
+                TokenModelJwt tokenmodel = JwtHelper.SerilaizeJwt(token);
+                var model = await _userManager.FindByIdAsync(tokenmodel.Uid);
+                var role = await _userManager.GetRolesAsync(model);
+                var rolemodel = await _roleManager.FindByNameAsync(role[0]);
+                var claim = await _roleManager.GetClaimsAsync(rolemodel);
+                TokenModelJwt tokenModel = new TokenModelJwt();
+                if (role.Count == 0)
+                {
+                    tokenModel.Uid = model.Id;
+                    tokenModel.Role = null;
+                    tokenModel.Claims = null;
+                }
+                else
+                {
+                    tokenModel.Uid = model.Id;
+                    tokenModel.Role = role[0];
+                    tokenModel.Claims = claim;
+                }
+                newToken = JwtHelper.IssueJwt(tokenModel);
+                return new ResponseModel<string>
+                {
+                    code = (int)code.Success,
+                    data = newToken,
+                    message = ""
+                };
+            }
+            catch
+            {
+                return new ResponseModel<string>
+                {
+                    code = (int)code.TokenExpired,
+                    data = newToken,
+                    message = "Token刷新错误"
+                };
+            }
+
+        }
+
+        /// <summary>
+        /// 注销
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Authorize]
         public ResponseModel<string> Logout() => new ResponseModel<string>
@@ -110,6 +182,10 @@ namespace OilStationCoreAPI.Controllers
             data = "success"
         };
 
+        /// <summary>
+        /// 获取用户和角色信息
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Authorize(Policy = "Roles_Get")]
         public ResponseModel<IEnumerable<UserAndRoleViewModel>> UserRole_Get()
@@ -117,6 +193,10 @@ namespace OilStationCoreAPI.Controllers
             return _aspNetUsersServices.UserRole_Get();
         }
 
+        /// <summary>
+        /// 获取角色信息
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Authorize(Policy = "Roles_Get")]
         public ResponseModel<IEnumerable<RolesViewModel>> Roles_Get()
@@ -124,6 +204,11 @@ namespace OilStationCoreAPI.Controllers
             return _aspNetRolesServices.Roles_Get();
         }
 
+        /// <summary>
+        /// 更新角色信息
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [Authorize(Policy = "Roles_Update")]
         public ResponseModel<bool> Roles_Update([FromBody]UserRolesViewModel model)
@@ -131,6 +216,11 @@ namespace OilStationCoreAPI.Controllers
             return _aspNetRolesServices.Roles_Update(model);
         }
 
+        /// <summary>
+        /// 获取声明信息
+        /// </summary>
+        /// <param name="RoleId"></param>
+        /// <returns></returns>
         [HttpGet]
         [Authorize(Policy = "Claim_Get")]
         public ResponseModel<IEnumerable<string>> Claim_Get(string RoleId)
@@ -138,6 +228,11 @@ namespace OilStationCoreAPI.Controllers
             return _aspNetRolesServices.Claim_Get(RoleId);
         }
 
+        /// <summary>
+        /// 更新声明信息
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [Authorize(Policy = "Claim_Update")]
         public ResponseModel<bool> Claim_Update([FromBody]ClaimViewModel model)
@@ -151,6 +246,10 @@ namespace OilStationCoreAPI.Controllers
         //    return 
         //}
 
+        /// <summary>
+        /// 获取用户信息列表
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Authorize(Policy = "UserInfo_Get")]
         public ResponseModel<IEnumerable<UserAndRoleViewModel>> UserInfo_Get()
@@ -158,7 +257,11 @@ namespace OilStationCoreAPI.Controllers
             return _aspNetUsersServices.UserRole_Get();
         }
 
-
+        /// <summary>
+        /// 更新用户信息
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [Authorize(Policy = "UserInfo_Update")]
         public ResponseModel<bool> UserInfo_Update([FromBody]UserInfoViewModel model)
@@ -166,6 +269,11 @@ namespace OilStationCoreAPI.Controllers
             return _aspNetUsersServices.UserInfo_Update(model);
         }
 
+        /// <summary>
+        /// 删除用户信息
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost]
         [Authorize(Policy = "UserInfo_Delete")]
         public ResponseModel<bool> UserInfo_Delete(string id)

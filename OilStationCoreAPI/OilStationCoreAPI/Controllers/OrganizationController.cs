@@ -21,6 +21,10 @@ namespace OilStationCoreAPI.Controllers
             this._organizationServices = organizationServices;
         }
 
+        /// <summary>
+        /// 获取组织信息
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Authorize(Policy = "Organization_Get")]
         public ResponseModel<List<OrganizationViewModel>> Organization_Get()
@@ -28,6 +32,11 @@ namespace OilStationCoreAPI.Controllers
             return _organizationServices.Organ_Get();
         }
 
+        /// <summary>
+        /// 添加组织信息
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [Authorize(Policy = "Organization_Add")]
         public ResponseModel<bool> Organization_Add([FromBody]OrganizationAddViewModel model)
@@ -35,6 +44,11 @@ namespace OilStationCoreAPI.Controllers
             return _organizationServices.Organ_Add(model);
         }
 
+        /// <summary>
+        /// 更新组织信息
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [Authorize(Policy = "Organization_Update")]
         public ResponseModel<bool> Organization_Update([FromBody]OrganizationAddViewModel model)
@@ -42,6 +56,11 @@ namespace OilStationCoreAPI.Controllers
             return _organizationServices.Organ_Update(model);
         }
 
+        /// <summary>
+        /// 删除组织信息
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost]
         [Authorize(Policy = "Organization_Delete")]
         public ResponseModel<bool> Organization_Delete(string id)

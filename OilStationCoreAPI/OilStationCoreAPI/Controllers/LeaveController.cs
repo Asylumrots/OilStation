@@ -21,6 +21,10 @@ namespace OilStationCoreAPI.Controllers
             this._leaveServices = leaveServices;
         }
 
+        /// <summary>
+        /// 获取离职信息
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Authorize(Policy = "Leave_Get")]
         public ResponseModel<List<LeaveViewModel>> Leave_Get()
@@ -28,6 +32,10 @@ namespace OilStationCoreAPI.Controllers
             return _leaveServices.Leave_Get();
         }
 
+        /// <summary>
+        /// 获取未审核离职信息
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Authorize(Policy = "Leave_CheckGet")]
         public ResponseModel<List<LeaveViewModel>> Leave_CheckGet()
@@ -35,6 +43,11 @@ namespace OilStationCoreAPI.Controllers
             return _leaveServices.Leave_CheckGet();
         }
 
+        /// <summary>
+        /// 添加离职信息
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [Authorize(Policy = "Leave_Add")]
         public ResponseModel<bool> Leave_Add([FromBody]LeaveViewModel model)
@@ -42,6 +55,11 @@ namespace OilStationCoreAPI.Controllers
             return _leaveServices.Leave_Add(model);
         }
 
+        /// <summary>
+        /// 审核离职信息
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [Authorize(Policy = "Leave_Check")]
         public ResponseModel<bool> Leave_Check([FromBody]CheckViewModel model)
@@ -49,6 +67,11 @@ namespace OilStationCoreAPI.Controllers
             return _leaveServices.Leave_Check(model);
         }
 
+        /// <summary>
+        /// 删除离职信息
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost]
         [Authorize(Policy = "Leave_Delete")]
         public ResponseModel<bool> Leave_Delete(string id)

@@ -21,6 +21,10 @@ namespace OilStationCoreAPI.Controllers
             this._oilServices = oilServices;
         }
 
+        /// <summary>
+        /// 获取油料申请信息
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Authorize(Policy = "OilOrder_Get")]
         public ResponseModel<List<OilOrderViewModel>> OilOrder_Get()
@@ -28,6 +32,10 @@ namespace OilStationCoreAPI.Controllers
             return _oilServices.OilOrder_Get();
         }
 
+        /// <summary>
+        /// 获取未审核油料申请信息
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Authorize(Policy = "OilOrder_CheckGet")]
         public ResponseModel<List<OilOrderViewModel>> OilOrder_CheckGet()
@@ -35,6 +43,11 @@ namespace OilStationCoreAPI.Controllers
             return _oilServices.OilOrder_CheckGet();
         }
 
+        /// <summary>
+        /// 添加油料申请信息
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [Authorize(Policy = "OilOrder_Add")]
         public ResponseModel<bool> OilOrder_Add([FromBody]OilOrderViewModel model)
@@ -42,6 +55,11 @@ namespace OilStationCoreAPI.Controllers
             return _oilServices.OilOrder_Add(model);
         }
 
+        /// <summary>
+        /// 审核油料申请信息
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [Authorize(Policy = "OilOrder_Check")]
         public ResponseModel<bool> OilOrder_Check([FromBody]CheckViewModel model)
@@ -49,6 +67,11 @@ namespace OilStationCoreAPI.Controllers
             return _oilServices.OilOrder_Check(model);
         }
 
+        /// <summary>
+        /// 删除油料申请信息
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost]
         [Authorize(Policy = "OilOrder_Delete")]
         public ResponseModel<bool> OilOrder_Delete(string id)

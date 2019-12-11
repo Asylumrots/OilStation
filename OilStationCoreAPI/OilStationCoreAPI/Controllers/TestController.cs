@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using OilStationCoreAPI.AuthHepler;
 using OilStationCoreAPI.IdentityModel;
+using OilStationCoreAPI.ViewModels;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -93,6 +94,7 @@ namespace OilStationCoreAPI.Controllers
             TokenModelJwt model = JwtHelper.SerilaizeJwt(token);
             return model;
         }
+
 
         [HttpGet]
         public string Get()
