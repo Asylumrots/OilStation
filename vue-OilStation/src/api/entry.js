@@ -17,7 +17,7 @@ export function GetEntryCheck() {
 export function CheckEntry(model) {
   return request({
     url: '/Entry/Entry_Check',
-    method: 'post',
+    method: 'put',
     data: model
   })
 }
@@ -25,7 +25,7 @@ export function CheckEntry(model) {
 export function DeleteEntry(id) {
   return request({
     url: '/Entry/Entry_Delete',
-    method: 'post',
+    method: 'delete',
     params: {id}
   })
 }

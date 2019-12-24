@@ -209,7 +209,7 @@ namespace OilStationCoreAPI.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpPut]
         [Authorize(Policy = "Roles_Update")]
         public ResponseModel<bool> Roles_Update([FromBody]UserRolesViewModel model)
         {
@@ -233,7 +233,7 @@ namespace OilStationCoreAPI.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpPut]
         [Authorize(Policy = "Claim_Update")]
         public ResponseModel<bool> Claim_Update([FromBody]ClaimViewModel model)
         {
@@ -262,7 +262,7 @@ namespace OilStationCoreAPI.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpPut]
         [Authorize(Policy = "UserInfo_Update")]
         public ResponseModel<bool> UserInfo_Update([FromBody]UserInfoViewModel model)
         {
@@ -274,7 +274,7 @@ namespace OilStationCoreAPI.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpDelete]
         [Authorize(Policy = "UserInfo_Delete")]
         public ResponseModel<bool> UserInfo_Delete(string id)
         {

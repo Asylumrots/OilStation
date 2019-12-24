@@ -42,7 +42,7 @@ export function GetUserInfo() {
 export function UpdateInfo(model) {
   return request({
     url: '/User/UserInfo_Update',
-    method: 'post',
+    method: 'put',
     data: model
   })
 }
@@ -50,7 +50,7 @@ export function UpdateInfo(model) {
 export function DeleteInfo(id) {
   return request({
     url: '/User/UserInfo_Delete',
-    method: 'post',
+    method: 'delete',
     params:{id}
   })
 }

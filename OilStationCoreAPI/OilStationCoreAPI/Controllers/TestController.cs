@@ -95,6 +95,16 @@ namespace OilStationCoreAPI.Controllers
             return model;
         }
 
+        [HttpPost]
+        public bool Login(TestViewModel model)
+        {
+            if (model.name=="123"&&model.pwd=="123")
+            {
+                return true;
+            }
+            return false;
+        }
+
 
         [HttpGet]
         public string Get()

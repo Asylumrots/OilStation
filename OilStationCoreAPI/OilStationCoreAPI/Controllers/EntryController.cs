@@ -28,6 +28,7 @@ namespace OilStationCoreAPI.Controllers
         /// <returns></returns>
         [HttpGet]
         [Authorize(Policy = "Entry_Get")]
+        //[SwaggerOperation("GetAll")]
         public ResponseModel<List<EntryViewModel>> Entry_Get()
         {
             return _entryServices.Entry_Get();
@@ -61,7 +62,7 @@ namespace OilStationCoreAPI.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpPut]
         [Authorize(Policy = "Entry_Check")]
         public ResponseModel<bool> Entry_Check([FromBody]CheckViewModel model)
         {
@@ -73,7 +74,7 @@ namespace OilStationCoreAPI.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpDelete]
         [Authorize(Policy = "Entry_Delete")]
         public ResponseModel<bool> Entry_Delete(string id)
         {

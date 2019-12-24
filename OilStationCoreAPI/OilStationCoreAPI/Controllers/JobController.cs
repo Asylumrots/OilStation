@@ -49,7 +49,7 @@ namespace OilStationCoreAPI.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpPut]
         [Authorize(Policy = "Job_Update")]
         public ResponseModel<bool> Job_Update([FromBody]JobViewModel model)
         {
@@ -61,7 +61,7 @@ namespace OilStationCoreAPI.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpDelete]
         [Authorize(Policy = "Job_Delete")]
         public ResponseModel<bool> Job_Delete(string id)
         {

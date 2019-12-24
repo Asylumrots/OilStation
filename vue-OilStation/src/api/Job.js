@@ -10,7 +10,7 @@ export function GetJob() {
 export function UpdateJob(model) {
   return request({
     url: '/Job/Job_Update',
-    method: 'post',
+    method: 'put',
     data: model
   })
 }
@@ -18,7 +18,7 @@ export function UpdateJob(model) {
 export function DeleteJob(id) {
   return request({
     url: '/Job/Job_Delete',
-    method: 'post',
+    method: 'delete',
     params: {id}
   })
 }

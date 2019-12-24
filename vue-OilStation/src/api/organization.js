@@ -10,7 +10,7 @@ export function GetOrganization() {
 export function UpdateOrganization(model) {
   return request({
     url: '/Organization/Organization_Update',
-    method: 'post',
+    method: 'put',
     data: model
   })
 }
@@ -26,7 +26,7 @@ export function AddOrganization(model) {
 export function DeleteOrganization(id) {
   return request({
     url: '/Organization/Organization_Delete',
-    method: 'post',
+    method: 'delete',
     params: {id}
   })
 }

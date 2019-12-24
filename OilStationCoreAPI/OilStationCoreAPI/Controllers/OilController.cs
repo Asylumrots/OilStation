@@ -60,7 +60,7 @@ namespace OilStationCoreAPI.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpPut]
         [Authorize(Policy = "OilOrder_Check")]
         public ResponseModel<bool> OilOrder_Check([FromBody]CheckViewModel model)
         {
@@ -72,7 +72,7 @@ namespace OilStationCoreAPI.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpDelete]
         [Authorize(Policy = "OilOrder_Delete")]
         public ResponseModel<bool> OilOrder_Delete(string id)
         {

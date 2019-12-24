@@ -17,7 +17,7 @@ export function GetRoles() {
 export function UpdateRoles(userId, roleId) {
   return request({
     url: '/User/Roles_Update',
-    method: 'post',
+    method: 'put',
     data: { userId, roleId }
   })
 }
@@ -33,7 +33,7 @@ export function GetClaim(roleId) {
 export function UpdateClaim(RoleId, ClaimList) {
   return request({
     url: '/User/Claim_Update',
-    method: 'post',
+    method: 'put',
     data: { RoleId, ClaimList }
   })
 }

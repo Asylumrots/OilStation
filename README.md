@@ -2,7 +2,7 @@
 
 >这是一个油站管理系统
 
-前端：Vue + ElementUI   (ElementUI 2.7.2)
+前端：Vue + ElementUI   (ElementUI 2.7.2)  
 后台：.NET Core Web API   (.net core 2.2)
 
 在线访问： [线上地址](http://47.102.210.25:60)   （请勿修改数据）

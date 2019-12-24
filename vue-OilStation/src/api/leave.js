@@ -17,7 +17,7 @@ export function GetLeaveCheck() {
 export function CheckLeave(model) {
   return request({
     url: '/Leave/Leave_Check',
-    method: 'post',
+    method: 'put',
     data: model
   })
 }
@@ -25,7 +25,7 @@ export function CheckLeave(model) {
 export function DeleteLeave(id) {
   return request({
     url: '/Leave/Leave_Delete',
-    method: 'post',
+    method: 'delete',
     params: {id}
   })
 }

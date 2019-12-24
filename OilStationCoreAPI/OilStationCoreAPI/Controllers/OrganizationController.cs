@@ -49,7 +49,7 @@ namespace OilStationCoreAPI.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpPut]
         [Authorize(Policy = "Organization_Update")]
         public ResponseModel<bool> Organization_Update([FromBody]OrganizationAddViewModel model)
         {
@@ -61,7 +61,7 @@ namespace OilStationCoreAPI.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpDelete]
         [Authorize(Policy = "Organization_Delete")]
         public ResponseModel<bool> Organization_Delete(string id)
         {

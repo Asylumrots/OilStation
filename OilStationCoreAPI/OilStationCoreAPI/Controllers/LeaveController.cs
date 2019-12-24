@@ -60,7 +60,7 @@ namespace OilStationCoreAPI.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpPut]
         [Authorize(Policy = "Leave_Check")]
         public ResponseModel<bool> Leave_Check([FromBody]CheckViewModel model)
         {
@@ -72,7 +72,7 @@ namespace OilStationCoreAPI.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpDelete]
         [Authorize(Policy = "Leave_Delete")]
         public ResponseModel<bool> Leave_Delete(string id)
         {
