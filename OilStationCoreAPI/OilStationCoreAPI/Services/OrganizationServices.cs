@@ -11,11 +11,16 @@ namespace OilStationCoreAPI.Services
 {
     public class OrganizationServices : IOrganizationServices
     {
-        OSMSContext db = new OSMSContext();
+        private readonly OSMSContext _db;
+
+        public OrganizationServices(OSMSContext db)
+        {
+            _db = db;
+        }
 
         public ResponseModel<List<OrganizationViewModel>> Organ_Get()
         {
-            var leve0 = db.OrganizationStructure.Where(x => x.Leve == 0).FirstOrDefault();
+            var leve0 = _db.OrganizationStructure.Where(x => x.Leve == 0).FirstOrDefault();
             OrganizationViewModel model = new OrganizationViewModel();
             List<OrganizationViewModel> list = get(leve0.Id.ToString());
             model.id = leve0.Id.ToString();
@@ -34,7 +39,7 @@ namespace OilStationCoreAPI.Services
 
         public List<OrganizationViewModel> get(string paid)
         {
-            var chList = db.OrganizationStructure.Where(x => x.ParentId.ToString().ToLower() == paid);
+            var chList = _db.OrganizationStructure.Where(x => x.ParentId.ToString().ToLower() == paid);
             List<OrganizationViewModel> list = new List<OrganizationViewModel>();
             foreach (var item in chList)
             {
@@ -45,18 +50,20 @@ namespace OilStationCoreAPI.Services
 
         public ResponseModel<bool> Organ_Add(OrganizationAddViewModel model)
         {
-            var parent = db.OrganizationStructure.Where(x => x.ParentId.ToString().ToLower() == model.id).FirstOrDefault();
-            OrganizationStructure organization = new OrganizationStructure();
-            organization.Id = Guid.NewGuid();
-            organization.Name = model.name;
-            organization.Code = model.code;
-            organization.Leve = parent.Leve + 1;
-            organization.ParentId = parent.Id;
-            organization.CreateTime = DateTime.Now;
-            organization.UpdateTime = DateTime.Now;
-            organization.IsDel = false;
-            db.OrganizationStructure.Add(organization);
-            int num = db.SaveChanges();
+            var parent = _db.OrganizationStructure.Where(x => x.ParentId.ToString().ToLower() == model.id).FirstOrDefault();
+            OrganizationStructure organization = new OrganizationStructure
+            {
+                Id = Guid.NewGuid(),
+                Name = model.name,
+                Code = model.code,
+                Leve = parent.Leve + 1,
+                ParentId = parent.Id,
+                CreateTime = DateTime.Now,
+                UpdateTime = DateTime.Now,
+                IsDel = false
+            };
+            _db.OrganizationStructure.Add(organization);
+            int num = _db.SaveChanges();
             if (num > 0)
             {
                 return new ResponseModel<bool> { code = (int)code.Success, data = true, message = "添加机构成功" };
@@ -66,11 +73,11 @@ namespace OilStationCoreAPI.Services
 
         public ResponseModel<bool> Organ_Update(OrganizationAddViewModel model)
         {
-            var organization = db.OrganizationStructure.Where(x => x.Id.ToString().ToLower() == model.id).FirstOrDefault();
+            var organization = _db.OrganizationStructure.Where(x => x.Id.ToString().ToLower() == model.id).FirstOrDefault();
             organization.Name = model.name;
             organization.Code = model.code;
-            db.OrganizationStructure.Update(organization);
-            int num = db.SaveChanges();
+            _db.OrganizationStructure.Update(organization);
+            int num = _db.SaveChanges();
             if (num > 0)
             {
                 return new ResponseModel<bool> { code = (int)code.Success, data = true, message = "修改机构信息成功" };
@@ -80,9 +87,9 @@ namespace OilStationCoreAPI.Services
 
         public ResponseModel<bool> Organ_Delete(string id)
         {
-            var organization = db.OrganizationStructure.Where(x => x.Id.ToString().ToLower() == id).FirstOrDefault();
-            db.OrganizationStructure.Remove(organization);
-            int num = db.SaveChanges();
+            var organization = _db.OrganizationStructure.Where(x => x.Id.ToString().ToLower() == id).FirstOrDefault();
+            _db.OrganizationStructure.Remove(organization);
+            int num = _db.SaveChanges();
             if (num > 0)
             {
                 return new ResponseModel<bool> { code = (int)code.Success, data = true, message = "删除机构成功" };

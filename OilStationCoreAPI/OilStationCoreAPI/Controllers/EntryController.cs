@@ -11,6 +11,9 @@ using OilStationCoreAPI.Services;
 using OilStationCoreAPI.ViewModels;
 namespace OilStationCoreAPI.Controllers
 {
+    /// <summary>
+    /// 入职信息控制器
+    /// </summary>
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class EntryController : ControllerBase

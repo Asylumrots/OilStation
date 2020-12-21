@@ -7,7 +7,7 @@ namespace OilStationCoreAPI.ViewModels
 {
     public class CheckViewModel
     {
-        public string id { get; set; }
+        public string Id { get; set; }
         public string CheckNo { get; set; }
         public string CheckTitle { get; set; }
     }

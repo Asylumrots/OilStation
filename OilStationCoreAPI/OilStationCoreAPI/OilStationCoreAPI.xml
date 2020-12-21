@@ -1,0 +1,479 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>OilStationCoreAPI</name>
+    </assembly>
+    <members>
+        <member name="M:OilStationCoreAPI.AuthHepler.Appsettings.app(System.String[])">
+            <summary>
+            封装要操作的字符串
+            </summary>
+            <param name="sections">节点</param>
+            <returns>最后一个节点的值</returns>
+        </member>
+        <member name="T:OilStationCoreAPI.AuthHepler.JwtHelper">
+            <summary>
+            颁发Jwt字符串
+            </summary>
+        </member>
+        <member name="M:OilStationCoreAPI.AuthHepler.JwtHelper.SerilaizeJwt(System.String)">
+            <summary>
+            解析Token
+            </summary>
+            <param name="jwtStr"></param>
+            <returns></returns>
+        </member>
+        <member name="M:OilStationCoreAPI.AuthHepler.JwtTokenAuth.Invoke(Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            
+            </summary>
+            <param name="httpContext"></param>
+            <returns></returns>
+        </member>
+        <member name="T:OilStationCoreAPI.AuthHepler.TokenModelJwt">
+            <summary>
+            令牌
+            </summary>
+        </member>
+        <member name="P:OilStationCoreAPI.AuthHepler.TokenModelJwt.Uid">
+            <summary>
+            Id
+            </summary>
+        </member>
+        <member name="P:OilStationCoreAPI.AuthHepler.TokenModelJwt.Role">
+            <summary>
+            角色
+            </summary>
+        </member>
+        <member name="P:OilStationCoreAPI.AuthHepler.TokenModelJwt.Claims">
+            <summary>
+            声明
+            </summary>
+        </member>
+        <member name="T:OilStationCoreAPI.Controllers.EntryController">
+            <summary>
+            入职信息控制器
+            </summary>
+        </member>
+        <member name="M:OilStationCoreAPI.Controllers.EntryController.Entry_Get">
+            <summary>
+            获取入职信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:OilStationCoreAPI.Controllers.EntryController.Entry_CheckGet">
+            <summary>
+            获取未审核入职信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:OilStationCoreAPI.Controllers.EntryController.Entry_Add(OilStationCoreAPI.ViewModels.EntryViewModel)">
+            <summary>
+            添加入职信息
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:OilStationCoreAPI.Controllers.EntryController.Entry_Check(OilStationCoreAPI.ViewModels.CheckViewModel)">
+            <summary>
+            审核入职信息
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:OilStationCoreAPI.Controllers.EntryController.Entry_Delete(System.String)">
+            <summary>
+            删除入职信息
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:OilStationCoreAPI.Controllers.JobController">
+            <summary>
+            职位信息控制器
+            </summary>
+        </member>
+        <member name="M:OilStationCoreAPI.Controllers.JobController.Job_Get">
+            <summary>
+            获取职位列表
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:OilStationCoreAPI.Controllers.JobController.Job_Add(OilStationCoreAPI.ViewModels.JobViewModel)">
+            <summary>
+            添加职位
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:OilStationCoreAPI.Controllers.JobController.Job_Update(OilStationCoreAPI.ViewModels.JobViewModel)">
+            <summary>
+            更新职位信息
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:OilStationCoreAPI.Controllers.JobController.Job_Delete(System.String)">
+            <summary>
+            删除职位
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:OilStationCoreAPI.Controllers.LeaveController">
+            <summary>
+            离职信息控制器
+            </summary>
+        </member>
+        <member name="M:OilStationCoreAPI.Controllers.LeaveController.Leave_Get">
+            <summary>
+            获取离职信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:OilStationCoreAPI.Controllers.LeaveController.Leave_CheckGet">
+            <summary>
+            获取未审核离职信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:OilStationCoreAPI.Controllers.LeaveController.Leave_Add(OilStationCoreAPI.ViewModels.LeaveViewModel)">
+            <summary>
+            添加离职信息
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:OilStationCoreAPI.Controllers.LeaveController.Leave_Check(OilStationCoreAPI.ViewModels.CheckViewModel)">
+            <summary>
+            审核离职信息
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:OilStationCoreAPI.Controllers.LeaveController.Leave_Delete(System.String)">
+            <summary>
+            删除离职信息
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:OilStationCoreAPI.Controllers.OilController">
+            <summary>
+            油料信息控制器
+            </summary>
+        </member>
+        <member name="M:OilStationCoreAPI.Controllers.OilController.OilOrder_Get">
+            <summary>
+            获取油料申请信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:OilStationCoreAPI.Controllers.OilController.OilOrder_CheckGet">
+            <summary>
+            获取未审核油料申请信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:OilStationCoreAPI.Controllers.OilController.OilOrder_Add(OilStationCoreAPI.ViewModels.OilOrderViewModel)">
+            <summary>
+            添加油料申请信息
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:OilStationCoreAPI.Controllers.OilController.OilOrder_Check(OilStationCoreAPI.ViewModels.CheckViewModel)">
+            <summary>
+            审核油料申请信息
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:OilStationCoreAPI.Controllers.OilController.OilOrder_Delete(System.String)">
+            <summary>
+            删除油料申请信息
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:OilStationCoreAPI.Controllers.OrganizationController">
+            <summary>
+            组织信息控制器
+            </summary>
+        </member>
+        <member name="M:OilStationCoreAPI.Controllers.OrganizationController.Organization_Get">
+            <summary>
+            获取组织信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:OilStationCoreAPI.Controllers.OrganizationController.Organization_Add(OilStationCoreAPI.ViewModels.OrganizationAddViewModel)">
+            <summary>
+            添加组织信息
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:OilStationCoreAPI.Controllers.OrganizationController.Organization_Update(OilStationCoreAPI.ViewModels.OrganizationAddViewModel)">
+            <summary>
+            更新组织信息
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:OilStationCoreAPI.Controllers.OrganizationController.Organization_Delete(System.String)">
+            <summary>
+            删除组织信息
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:OilStationCoreAPI.Controllers.TestController">
+            <summary>
+            测试控制器
+            </summary>
+        </member>
+        <member name="T:OilStationCoreAPI.Controllers.UserController">
+            <summary>
+            用户控制器
+            </summary>
+        </member>
+        <member name="M:OilStationCoreAPI.Controllers.UserController.Login(OilStationCoreAPI.ViewModels.LoginViewModel)">
+            <summary>
+            登录
+            </summary>
+            <param name="loginViewModel"></param>
+            <returns></returns>
+        </member>
+        <member name="M:OilStationCoreAPI.Controllers.UserController.Info(System.String)">
+            <summary>
+            获取用户信息
+            </summary>
+            <param name="token"></param>
+            <returns></returns>
+        </member>
+        <member name="M:OilStationCoreAPI.Controllers.UserController.RefreshToken(System.String)">
+            <summary>
+            刷新token
+            </summary>
+            <param name="token"></param>
+            <returns></returns>
+        </member>
+        <member name="M:OilStationCoreAPI.Controllers.UserController.Logout">
+            <summary>
+            注销
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:OilStationCoreAPI.Controllers.UserController.UserRole_Get">
+            <summary>
+            获取用户和角色信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:OilStationCoreAPI.Controllers.UserController.Roles_Get">
+            <summary>
+            获取角色信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:OilStationCoreAPI.Controllers.UserController.Roles_Update(OilStationCoreAPI.ViewModels.UserRolesViewModel)">
+            <summary>
+            更新角色信息
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:OilStationCoreAPI.Controllers.UserController.Claim_Get(System.String)">
+            <summary>
+            获取声明信息
+            </summary>
+            <param name="RoleId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:OilStationCoreAPI.Controllers.UserController.Claim_Update(OilStationCoreAPI.ViewModels.ClaimViewModel)">
+            <summary>
+            更新声明信息
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:OilStationCoreAPI.Controllers.UserController.UserInfo_Get">
+            <summary>
+            获取用户信息列表
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:OilStationCoreAPI.Controllers.UserController.UserInfo_Update(OilStationCoreAPI.ViewModels.UserInfoViewModel)">
+            <summary>
+            更新用户信息
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:OilStationCoreAPI.Controllers.UserController.UserInfo_Delete(System.String)">
+            <summary>
+            删除用户信息
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="P:OilStationCoreAPI.IdentityModel.ApplicationUser.UserSex">
+            <summary>
+            用户性别
+            </summary>
+        </member>
+        <member name="M:OilStationCoreAPI.IServices.IStaffServices.Login(OilStationCoreAPI.ViewModels.LoginViewModel)">
+            <summary>
+            用户登录
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:OilStationCoreAPI.Tool.ImageBase64.ImageToBase64(System.String)">
+            <summary>
+            Image 转成 base64
+            </summary>
+            <param name="fileFullName"></param>
+        </member>
+        <member name="F:OilStationCoreAPI.ViewModels.CodeEnum.code.Success">
+            <summary>
+            成功
+            </summary>
+        </member>
+        <member name="F:OilStationCoreAPI.ViewModels.CodeEnum.code.Fail">
+            <summary>
+            失败
+            </summary>
+        </member>
+        <member name="F:OilStationCoreAPI.ViewModels.CodeEnum.code.CheckError">
+            <summary>
+            用户名或密码验证错误
+            </summary>
+        </member>
+        <member name="F:OilStationCoreAPI.ViewModels.CodeEnum.code.LoginFaile">
+            <summary>
+            用户名或密码错误
+            </summary>
+        </member>
+        <member name="F:OilStationCoreAPI.ViewModels.CodeEnum.code.GetUserRoleInfoFail">
+            <summary>
+            用户角色信息获取失败
+            </summary>
+        </member>
+        <member name="F:OilStationCoreAPI.ViewModels.CodeEnum.code.GetRoleFail">
+            <summary>
+            角色信息获取失败
+            </summary>
+        </member>
+        <member name="F:OilStationCoreAPI.ViewModels.CodeEnum.code.GetClaimFail">
+            <summary>
+            声明信息获取失败
+            </summary>
+        </member>
+        <member name="F:OilStationCoreAPI.ViewModels.CodeEnum.code.UpdateRoleFail">
+            <summary>
+            修改用户角色失败
+            </summary>
+        </member>
+        <member name="F:OilStationCoreAPI.ViewModels.CodeEnum.code.UpdateClaimFail">
+            <summary>
+            修改声明失败
+            </summary>
+        </member>
+        <member name="F:OilStationCoreAPI.ViewModels.CodeEnum.code.UpdateUserInfoFail">
+            <summary>
+            修改用户信息失败
+            </summary>
+        </member>
+        <member name="F:OilStationCoreAPI.ViewModels.CodeEnum.code.UpdateJobFail">
+            <summary>
+            修改职位信息失败
+            </summary>
+        </member>
+        <member name="F:OilStationCoreAPI.ViewModels.CodeEnum.code.UpdateOrganizationFail">
+            <summary>
+            修改机构信息失败
+            </summary>
+        </member>
+        <member name="F:OilStationCoreAPI.ViewModels.CodeEnum.code.UpdateCheckEntryFail">
+            <summary>
+            审核入职信息失败
+            </summary>
+        </member>
+        <member name="F:OilStationCoreAPI.ViewModels.CodeEnum.code.UpdaateCheckLeaveFail">
+            <summary>
+            审核离职信息失败
+            </summary>
+        </member>
+        <member name="F:OilStationCoreAPI.ViewModels.CodeEnum.code.UpdateCheckOilOrderFail">
+            <summary>
+            审核油料订单失败
+            </summary>
+        </member>
+        <member name="F:OilStationCoreAPI.ViewModels.CodeEnum.code.DeleteUserFail">
+            <summary>
+            删除用户失败
+            </summary>
+        </member>
+        <member name="F:OilStationCoreAPI.ViewModels.CodeEnum.code.DeleteJobFail">
+            <summary>
+            删除职位失败
+            </summary>
+        </member>
+        <member name="F:OilStationCoreAPI.ViewModels.CodeEnum.code.DeleteOrganizationFail">
+            <summary>
+            删除机构失败
+            </summary>
+        </member>
+        <member name="F:OilStationCoreAPI.ViewModels.CodeEnum.code.DeleteEntryFail">
+            <summary>
+            删除入职信息失败
+            </summary>
+        </member>
+        <member name="F:OilStationCoreAPI.ViewModels.CodeEnum.code.DeleteLeaveFail">
+            <summary>
+            删除离职信息失败
+            </summary>
+        </member>
+        <member name="F:OilStationCoreAPI.ViewModels.CodeEnum.code.DeleteOilOrderFail">
+            <summary>
+            删除油料订单失败
+            </summary>
+        </member>
+        <member name="F:OilStationCoreAPI.ViewModels.CodeEnum.code.AddJobFail">
+            <summary>
+            添加职位失败
+            </summary>
+        </member>
+        <member name="F:OilStationCoreAPI.ViewModels.CodeEnum.code.AddOrganizationFail">
+            <summary>
+            添加机构失败
+            </summary>
+        </member>
+        <member name="F:OilStationCoreAPI.ViewModels.CodeEnum.code.AddEntryFail">
+            <summary>
+            添加入职信息失败
+            </summary>
+        </member>
+        <member name="F:OilStationCoreAPI.ViewModels.CodeEnum.code.AddLeaveFail">
+            <summary>
+            添加离职信息失败
+            </summary>
+        </member>
+        <member name="F:OilStationCoreAPI.ViewModels.CodeEnum.code.AddOilOrderFail">
+            <summary>
+            添加油料订单失败
+            </summary>
+        </member>
+        <member name="F:OilStationCoreAPI.ViewModels.CodeEnum.code.TokenExpired">
+            <summary>
+            Token过期
+            </summary>
+        </member>
+        <member name="F:OilStationCoreAPI.ViewModels.CodeEnum.code.TokenError">
+            <summary>
+            Token错误
+            </summary>
+        </member>
+    </members>
+</doc>

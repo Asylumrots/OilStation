@@ -11,34 +11,46 @@ namespace OilStationCoreAPI.Services
 {
     public class EntryServices : IEntryServices
     {
-        OSMSContext db = new OSMSContext();
+        private readonly OSMSContext _db;
+
+        public EntryServices(OSMSContext db)
+        {
+            _db = db;
+        }
 
         public ResponseModel<List<EntryViewModel>> Entry_Get()
         {
-            //var list = db.Entry.Where(x => true).Select(z => new List<EntryViewModel>() {
+            //var list = _db.Entry.Where(x => true).Select(z => new List<EntryViewModel>() {
             //    new EntryViewModel()
             //    {
             //         WorkNumber=hggg(job.Id.ToString().ToLower()) ;
             //    }
             //});
-            var list = db.Entry.Where(x => true);
-            var joblist = db.Job.Where(x => true);
+            var list = _db.Entry.Where(x => true);
+            var jobList = _db.Job.Where(x => true);
             List<EntryViewModel> reList = new List<EntryViewModel>();
             foreach (var item in list)
             {
-                EntryViewModel entry = new EntryViewModel();
-                entry.Id = item.Id.ToString();
-                entry.StaffName = item.StaffName;
-                entry.Sex = item.Sex == true ? "男" : "女";
-                entry.BirthDay = Convert.ToDateTime(item.BirthDay);
-                entry.Address = item.Address;
-                entry.Email = item.Email;
-                entry.Tel = item.Tel;
-                entry.ProbationarySalary = item.ProbationarySalary;
-                entry.CorrectSalary = item.CorrectSalary;
-                entry.EntryDate = Convert.ToDateTime(item.EntryDate);
-                entry.CreateStaffeId = item.CreateStaffeId.ToString();
-                entry.CreateTime = Convert.ToDateTime(item.CreateTime);
+                EntryViewModel entry = new EntryViewModel
+                {
+                    Id = item.Id.ToString(),
+                    StaffName = item.StaffName,
+                    Sex = item.Sex == true ? "男" : "女",
+                    BirthDay = Convert.ToDateTime(item.BirthDay),
+                    Address = item.Address,
+                    Email = item.Email,
+                    Tel = item.Tel,
+                    ProbationarySalary = item.ProbationarySalary,
+                    CorrectSalary = item.CorrectSalary,
+                    EntryDate = Convert.ToDateTime(item.EntryDate),
+                    CreateStaffeId = item.CreateStaffeId.ToString(),
+                    CreateTime = Convert.ToDateTime(item.CreateTime),
+                    WorkNumber = jobList
+                        .FirstOrDefault(x => x.Id.ToString().ToLower() == item.WorkNumber.ToString().ToLower()).Name,
+                    No = item.No,
+                    Title = item.Title,
+                    IsDel = item.IsDel
+                };
                 //foreach (var job in joblist)
                 //{
                 //    if (item.WorkNumber.ToString().ToLower() == job.Id.ToString().ToLower())
@@ -46,10 +58,6 @@ namespace OilStationCoreAPI.Services
                 //        entry.WorkNumber = job.Name;
                 //    }
                 //}
-                entry.WorkNumber = joblist.Where(x => x.Id.ToString().ToLower() == item.WorkNumber.ToString().ToLower()).FirstOrDefault().Name;
-                entry.No = item.No;
-                entry.Title = item.Title;
-                entry.IsDel = item.IsDel;
                 reList.Add(entry);
             }
             return new ResponseModel<List<EntryViewModel>>
@@ -62,25 +70,29 @@ namespace OilStationCoreAPI.Services
 
         public ResponseModel<List<EntryViewModel>> Entry_CheckGet()
         {
-            var list = db.Entry.Where(x => x.No == "0");
-            var joblist = db.Job.Where(x => true);
+            var list = _db.Entry.Where(x => x.No == "0");
+            var joblist = _db.Job.Where(x => true);
             List<EntryViewModel> reList = new List<EntryViewModel>();
             foreach (var item in list)
             {
-                EntryViewModel entry = new EntryViewModel();
-                entry.Id = item.Id.ToString();
-                entry.StaffName = item.StaffName;
-                entry.Sex = item.Sex == true ? "男" : "女";
-                entry.BirthDay = Convert.ToDateTime(item.BirthDay);
-                entry.Address = item.Address;
-                entry.Email = item.Email;
-                entry.Tel = item.Tel;
-                entry.ProbationarySalary = item.ProbationarySalary;
-                entry.CorrectSalary = item.CorrectSalary;
-                entry.EntryDate = Convert.ToDateTime(item.EntryDate);
-                entry.CreateStaffeId = item.CreateStaffeId.ToString();
-                entry.CreateTime = Convert.ToDateTime(item.CreateTime);
-                entry.WorkNumber = joblist.Where(x => x.Id.ToString().ToLower() == item.WorkNumber.ToString().ToLower()).FirstOrDefault().Name; ;
+                EntryViewModel entry = new EntryViewModel
+                {
+                    Id = item.Id.ToString(),
+                    StaffName = item.StaffName,
+                    Sex = item.Sex == true ? "男" : "女",
+                    BirthDay = Convert.ToDateTime(item.BirthDay),
+                    Address = item.Address,
+                    Email = item.Email,
+                    Tel = item.Tel,
+                    ProbationarySalary = item.ProbationarySalary,
+                    CorrectSalary = item.CorrectSalary,
+                    EntryDate = Convert.ToDateTime(item.EntryDate),
+                    CreateStaffeId = item.CreateStaffeId.ToString(),
+                    CreateTime = Convert.ToDateTime(item.CreateTime),
+                    WorkNumber = joblist.Where(x => x.Id.ToString().ToLower() == item.WorkNumber.ToString().ToLower())
+                        .FirstOrDefault().Name
+                };
+                ;
                 entry.No = item.No;
                 entry.Title = item.Title;
                 entry.IsDel = item.IsDel;
@@ -96,18 +108,20 @@ namespace OilStationCoreAPI.Services
 
         public ResponseModel<bool> Entry_Add(EntryViewModel item)
         {
-            Entry entry = new Entry();
-            entry.Id = Guid.NewGuid();
-            entry.StaffName = item.StaffName;
-            entry.Sex = item.Sex == "男" ? true : false;
-            entry.BirthDay = Convert.ToDateTime(item.BirthDay);
-            entry.Address = item.Address;
-            entry.Email = item.Email;
-            entry.Tel = item.Tel;
-            entry.ProbationarySalary = item.ProbationarySalary;
-            entry.CorrectSalary = item.CorrectSalary;
-            entry.EntryDate = Convert.ToDateTime(item.EntryDate);
-            var user = db.AspNetUsers.Where(x => x.UserName == item.CreateStaffeId).FirstOrDefault();
+            Entry entry = new Entry
+            {
+                Id = Guid.NewGuid(),
+                StaffName = item.StaffName,
+                Sex = item.Sex == "男" ? true : false,
+                BirthDay = Convert.ToDateTime(item.BirthDay),
+                Address = item.Address,
+                Email = item.Email,
+                Tel = item.Tel,
+                ProbationarySalary = item.ProbationarySalary,
+                CorrectSalary = item.CorrectSalary,
+                EntryDate = Convert.ToDateTime(item.EntryDate)
+            };
+            var user = _db.AspNetUsers.Where(x => x.UserName == item.CreateStaffeId).FirstOrDefault();
             entry.CreateStaffeId = new Guid(user.Id);
             entry.CreateTime = DateTime.Now;
             entry.UpdateTime = DateTime.Now;
@@ -115,8 +129,8 @@ namespace OilStationCoreAPI.Services
             //默认
             entry.No = "0";
             entry.IsDel = false;
-            db.Entry.Add(entry);
-            int num = db.SaveChanges();
+            _db.Entry.Add(entry);
+            int num = _db.SaveChanges();
             if (num > 0)
             {
                 return new ResponseModel<bool> { code = (int)code.Success, data = true, message = "添加入职信息成功" };
@@ -126,9 +140,9 @@ namespace OilStationCoreAPI.Services
 
         public ResponseModel<bool> Entry_Delete(string id)
         {
-            var entry = db.Entry.Where(x => x.Id.ToString().ToLower() == id).FirstOrDefault();
-            db.Entry.Remove(entry);
-            int num = db.SaveChanges();
+            var entry = _db.Entry.Where(x => x.Id.ToString().ToLower() == id).FirstOrDefault();
+            _db.Entry.Remove(entry);
+            int num = _db.SaveChanges();
             if (num > 0)
             {
                 return new ResponseModel<bool> { code = (int)code.Success, data = true, message = "删除入职信息成功" };
@@ -138,11 +152,11 @@ namespace OilStationCoreAPI.Services
 
         public ResponseModel<bool> Entry_Check(CheckViewModel model)
         {
-            var entry = db.Entry.Where(x => x.Id.ToString().ToLower() == model.id).FirstOrDefault();
+            var entry = _db.Entry.Where(x => x.Id.ToString().ToLower() == model.Id).FirstOrDefault();
             entry.No = model.CheckNo;
             entry.Title = model.CheckTitle;
-            db.Entry.Update(entry);
-            int num = db.SaveChanges();
+            _db.Entry.Update(entry);
+            int num = _db.SaveChanges();
             if (num > 0)
             {
                 return new ResponseModel<bool> { code = (int)code.Success, data = true, message = "审核入职信息成功" };

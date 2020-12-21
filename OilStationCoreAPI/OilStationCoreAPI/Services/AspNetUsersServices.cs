@@ -1,13 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using OilStationCoreAPI.IdentityModel;
-using OilStationCoreAPI.IServices;
+﻿using OilStationCoreAPI.IServices;
 using OilStationCoreAPI.Models;
 using OilStationCoreAPI.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using static OilStationCoreAPI.ViewModels.CodeEnum;
 
 namespace OilStationCoreAPI.Services
@@ -20,22 +16,26 @@ namespace OilStationCoreAPI.Services
         //}
 
         //private readonly UserManager<ApplicationUser> _userManager;
-        OSMSContext db = new OSMSContext();
-        //ApplicationDbContext adb = new ApplicationDbContext();
+        private readonly OSMSContext _db;
+
+        public AspNetUsersServices(OSMSContext db)
+        {
+            _db = db;
+        }
 
         public ResponseModel<IEnumerable<UserAndRoleViewModel>> UserRole_Get()
         {
             List<UserAndRoleViewModel> reList = new List<UserAndRoleViewModel>();
-            var list = db.AspNetUsers.Where(x => true);
+            var list = _db.AspNetUsers.Where(x => true);
             try
             {
                 foreach (var item in list)
                 {
                     UserAndRoleViewModel userRoleViewModel = new UserAndRoleViewModel();
-                    var s = db.AspNetUserRoles.Where(x => x.UserId == item.Id).FirstOrDefault();
+                    var s = _db.AspNetUserRoles.Where(x => x.UserId == item.Id).FirstOrDefault();
                     string roleName = null;
                     if (s != null)
-                        roleName = db.AspNetRoles.Where(x => x.Id == s.RoleId).FirstOrDefault().Name;
+                        roleName = _db.AspNetRoles.Where(x => x.Id == s.RoleId).FirstOrDefault().Name;
                     else
                         roleName = "暂无";
                     userRoleViewModel.Id = item.Id;
@@ -48,7 +48,7 @@ namespace OilStationCoreAPI.Services
                     userRoleViewModel.BirthDay = item.BirthDay;
                     userRoleViewModel.Address = item.Address;
                     userRoleViewModel.JobId = item.JobId.ToLower();
-                    var jobList = db.Job;
+                    var jobList = _db.Job;
                     foreach (var job in jobList)
                     {
                         if (job.Id.ToString() == item.JobId.ToLower())
@@ -79,7 +79,7 @@ namespace OilStationCoreAPI.Services
 
         public ResponseModel<bool> UserInfo_Update(UserInfoViewModel model)
         {
-            var userInfo = db.AspNetUsers.Where(x => x.Id == model.id).FirstOrDefault();
+            var userInfo = _db.AspNetUsers.Where(x => x.Id == model.id).FirstOrDefault();
             userInfo.UserName = model.userName;
             userInfo.UserSex = model.userSex == "男" ? "1" : "0";
             userInfo.PhoneNumber = model.phoneNumber;
@@ -87,8 +87,8 @@ namespace OilStationCoreAPI.Services
             userInfo.Address = model.address;
             userInfo.BirthDay = model.birthday;
             userInfo.JobId = model.Job;
-            db.AspNetUsers.Update(userInfo);
-            int num = db.SaveChanges();
+            _db.AspNetUsers.Update(userInfo);
+            int num = _db.SaveChanges();
             if (num > 0)
             {
                 return new ResponseModel<bool>
@@ -111,9 +111,9 @@ namespace OilStationCoreAPI.Services
 
         public ResponseModel<bool> UserInfo_Delete(string id)
         {
-            var userInfo = db.AspNetUsers.Where(x => x.Id == id).FirstOrDefault();
-            db.AspNetUsers.Remove(userInfo);
-            int num = db.SaveChanges();
+            var userInfo = _db.AspNetUsers.Where(x => x.Id == id).FirstOrDefault();
+            _db.AspNetUsers.Remove(userInfo);
+            int num = _db.SaveChanges();
             if (num>0)
             {
                 return new ResponseModel<bool>

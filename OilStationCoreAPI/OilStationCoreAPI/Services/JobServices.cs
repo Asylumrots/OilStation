@@ -11,11 +11,16 @@ namespace OilStationCoreAPI.Services
 {
     public class JobServices : IJobServices
     {
-        OSMSContext db = new OSMSContext();
+        private readonly OSMSContext _db;
+
+        public JobServices(OSMSContext db)
+        {
+            _db = db;
+        }
 
         public ResponseModel<IEnumerable<Job>> Job_Get()
         {
-            var list = db.Job.AsEnumerable();
+            var list = _db.Job.AsEnumerable();
             return new ResponseModel<IEnumerable<Job>>
             {
                 code = (int)code.Success,
@@ -26,13 +31,13 @@ namespace OilStationCoreAPI.Services
 
         public ResponseModel<bool> Job_Update(JobViewModel model)
         {
-            var job = db.Job.Where(x => x.Id.ToString().ToLower() == model.id).FirstOrDefault();
+            var job = _db.Job.Where(x => x.Id.ToString().ToLower() == model.id).FirstOrDefault();
             int num = 0;
             if (job != null)
             {
                 job.Name = model.name;
                 job.Code = model.code;
-                num = db.SaveChanges();
+                num = _db.SaveChanges();
             }
             if (num > 0)
             {
@@ -43,12 +48,12 @@ namespace OilStationCoreAPI.Services
 
         public ResponseModel<bool> Job_Delete(string id)
         {
-            var job = db.Job.Where(x => x.Id.ToString().ToLower() == id).FirstOrDefault();
+            var job = _db.Job.Where(x => x.Id.ToString().ToLower() == id).FirstOrDefault();
             int num = 0;
             if (job != null)
             {
-                db.Job.Remove(job);
-                num = db.SaveChanges();
+                _db.Job.Remove(job);
+                num = _db.SaveChanges();
             }
             if (num > 0)
             {
@@ -59,16 +64,18 @@ namespace OilStationCoreAPI.Services
 
         public ResponseModel<bool> Job_Add(JobViewModel model)
         {
-            Job job = new Job();
-            job.Id = Guid.NewGuid();
-            job.Name = model.name;
-            job.Code = model.code;
-            job.CreateTime = DateTime.Now;
-            job.UpdateTime = DateTime.Now;
-            job.IsDel = false;
+            Job job = new Job
+            {
+                Id = Guid.NewGuid(),
+                Name = model.name,
+                Code = model.code,
+                CreateTime = DateTime.Now,
+                UpdateTime = DateTime.Now,
+                IsDel = false
+            };
             int num = 0;
-            db.Job.Add(job);
-            num = db.SaveChanges();
+            _db.Job.Add(job);
+            num = _db.SaveChanges();
             if (num > 0)
             {
                 return new ResponseModel<bool> { code = (int)code.Success, data = true, message = "添加职位信息成功" };

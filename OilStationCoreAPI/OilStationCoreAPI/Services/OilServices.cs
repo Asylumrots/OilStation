@@ -11,12 +11,17 @@ namespace OilStationCoreAPI.Services
 {
     public class OilServices : IOilServices
     {
-        OSMSContext db = new OSMSContext();
+        private readonly OSMSContext _db;
+
+        public OilServices(OSMSContext db)
+        {
+            _db = db;
+        }
 
         public ResponseModel<List<OilOrderViewModel>> OilOrder_Get()
         {
-            var user = db.AspNetUsers.Where(x => true);
-            var list = db.OilMaterialOrder.Join(db.OilMaterialOrderDetail, m => m.Id, d => d.OrderId, (m, d) => new OilOrderViewModel
+            var user = _db.AspNetUsers.Where(x => true);
+            var list = _db.OilMaterialOrder.Join(_db.OilMaterialOrderDetail, m => m.Id, d => d.OrderId, (m, d) => new OilOrderViewModel
             {
                 Id = m.Id.ToString(),
                 No = m.No,
@@ -39,8 +44,8 @@ namespace OilStationCoreAPI.Services
 
         public ResponseModel<List<OilOrderViewModel>> OilOrder_CheckGet()
         {
-            var user = db.AspNetUsers.Where(x => true);
-            var list = db.OilMaterialOrder.Where(x => x.No == "0").Join(db.OilMaterialOrderDetail, m => m.Id, d => d.OrderId, (m, d) => new OilOrderViewModel
+            var user = _db.AspNetUsers.Where(x => true);
+            var list = _db.OilMaterialOrder.Where(x => x.No == "0").Join(_db.OilMaterialOrderDetail, m => m.Id, d => d.OrderId, (m, d) => new OilOrderViewModel
             {
                 Id = m.Id.ToString(),
                 No = m.No,
@@ -63,7 +68,7 @@ namespace OilStationCoreAPI.Services
 
         public ResponseModel<bool> OilOrder_Add(OilOrderViewModel model)
         {
-            var user = db.AspNetUsers.Where(x => true);
+            var user = _db.AspNetUsers.Where(x => true);
             OilMaterialOrder o = new OilMaterialOrder();
             o.Id = Guid.NewGuid();
             o.No = "0";
@@ -83,9 +88,9 @@ namespace OilStationCoreAPI.Services
             d.NeedAmount = model.NeedAmount;
             d.CreateTime = DateTime.Now;
             d.UpdateTime = DateTime.Now;
-            db.OilMaterialOrder.Add(o);
-            db.OilMaterialOrderDetail.Add(d);
-            int num = db.SaveChanges();
+            _db.OilMaterialOrder.Add(o);
+            _db.OilMaterialOrderDetail.Add(d);
+            int num = _db.SaveChanges();
             if (num >= 2)
             {
                 return new ResponseModel<bool> { code = (int)code.Success, data = true, message = "添加油料订单成功" };
@@ -95,9 +100,9 @@ namespace OilStationCoreAPI.Services
 
         public ResponseModel<bool> OilOrder_Check(CheckViewModel model)
         {
-            var oilOrder = db.OilMaterialOrder.Where(x => x.Id.ToString().ToLower() == model.id).FirstOrDefault();
+            var oilOrder = _db.OilMaterialOrder.Where(x => x.Id.ToString().ToLower() == model.Id).FirstOrDefault();
             oilOrder.No = model.CheckNo;
-            int num = db.SaveChanges();
+            int num = _db.SaveChanges();
             if (num > 0)
             {
                 return new ResponseModel<bool> { code = (int)code.Success, data = true, message = "审核油料订单成功" };
@@ -107,11 +112,11 @@ namespace OilStationCoreAPI.Services
 
         public ResponseModel<bool> OilOrder_Delete(string id)
         {
-            var oilOrder = db.OilMaterialOrder.Where(x => x.Id.ToString().ToLower() == id).FirstOrDefault();
-            var oilOrderDetail = db.OilMaterialOrderDetail.Where(x => x.OrderId.ToString().ToLower() == id).FirstOrDefault();
-            db.OilMaterialOrder.Remove(oilOrder);
-            db.OilMaterialOrderDetail.Remove(oilOrderDetail);
-            int num = db.SaveChanges();
+            var oilOrder = _db.OilMaterialOrder.Where(x => x.Id.ToString().ToLower() == id).FirstOrDefault();
+            var oilOrderDetail = _db.OilMaterialOrderDetail.Where(x => x.OrderId.ToString().ToLower() == id).FirstOrDefault();
+            _db.OilMaterialOrder.Remove(oilOrder);
+            _db.OilMaterialOrderDetail.Remove(oilOrderDetail);
+            int num = _db.SaveChanges();
             if (num >= 2)
             {
                 return new ResponseModel<bool> { code = (int)code.Success, data = true, message = "删除油料订单成功" };

@@ -11,24 +11,32 @@ namespace OilStationCoreAPI.Services
 {
     public class LeaveServices : ILeaveServices
     {
-        OSMSContext db = new OSMSContext();
+        private readonly OSMSContext _db;
+
+        public LeaveServices(OSMSContext db)
+        {
+            _db = db;
+        }
 
         public ResponseModel<List<LeaveViewModel>> Leave_Get()
         {
-            var list = db.LeaveOffice.Where(x => true);
-            var joblist = db.Job.Where(x => true);
+            var list = _db.LeaveOffice.Where(x => true);
+            var joblist = _db.Job.Where(x => true);
             List<LeaveViewModel> reList = new List<LeaveViewModel>();
             foreach (var item in list)
             {
-                LeaveViewModel leave = new LeaveViewModel();
-                leave.Id = item.Id.ToString();
-                leave.StaffName = item.StaffName;
-                leave.JobId = joblist.Where(x => x.Id.ToString().ToLower() == item.JobId.ToString().ToLower()).FirstOrDefault().Name;
-                leave.LeaveType = item.LeaveType == "0" ? "离职" : "辞退";
-                leave.ApplyTime = Convert.ToDateTime(item.ApplyDate);
-                leave.Reason = item.Reason;
-                leave.No = item.No;
-                leave.CreateTime = Convert.ToDateTime(item.CreateTime);
+                LeaveViewModel leave = new LeaveViewModel
+                {
+                    Id = item.Id.ToString(),
+                    StaffName = item.StaffName,
+                    JobId = joblist.Where(x => x.Id.ToString().ToLower() == item.JobId.ToString().ToLower())
+                        .FirstOrDefault().Name,
+                    LeaveType = item.LeaveType == "0" ? "离职" : "辞退",
+                    ApplyTime = Convert.ToDateTime(item.ApplyDate),
+                    Reason = item.Reason,
+                    No = item.No,
+                    CreateTime = Convert.ToDateTime(item.CreateTime)
+                };
                 reList.Add(leave);
             }
             return new ResponseModel<List<LeaveViewModel>>
@@ -41,20 +49,23 @@ namespace OilStationCoreAPI.Services
 
         public ResponseModel<List<LeaveViewModel>> Leave_CheckGet()
         {
-            var list = db.LeaveOffice.Where(x => x.No == "0");
-            var joblist = db.Job.Where(x => true);
+            var list = _db.LeaveOffice.Where(x => x.No == "0");
+            var joblist = _db.Job.Where(x => true);
             List<LeaveViewModel> reList = new List<LeaveViewModel>();
             foreach (var item in list)
             {
-                LeaveViewModel leave = new LeaveViewModel();
-                leave.Id = item.Id.ToString();
-                leave.StaffName = item.StaffName;
-                leave.JobId = joblist.Where(x => x.Id.ToString().ToLower() == item.JobId.ToString().ToLower()).FirstOrDefault().Name;
-                leave.LeaveType = item.LeaveType;
-                leave.ApplyTime = Convert.ToDateTime(item.ApplyDate);
-                leave.Reason = item.Reason;
-                leave.No = item.No;
-                leave.CreateTime = Convert.ToDateTime(item.CreateTime);
+                LeaveViewModel leave = new LeaveViewModel
+                {
+                    Id = item.Id.ToString(),
+                    StaffName = item.StaffName,
+                    JobId = joblist.Where(x => x.Id.ToString().ToLower() == item.JobId.ToString().ToLower())
+                        .FirstOrDefault().Name,
+                    LeaveType = item.LeaveType,
+                    ApplyTime = Convert.ToDateTime(item.ApplyDate),
+                    Reason = item.Reason,
+                    No = item.No,
+                    CreateTime = Convert.ToDateTime(item.CreateTime)
+                };
                 reList.Add(leave);
             }
             return new ResponseModel<List<LeaveViewModel>>
@@ -67,18 +78,20 @@ namespace OilStationCoreAPI.Services
 
         public ResponseModel<bool> Leave_Add(LeaveViewModel model)
         {
-            LeaveOffice leave = new LeaveOffice();
-            leave.Id = Guid.NewGuid();
-            leave.StaffName = model.StaffName;
-            leave.No = "0";
-            leave.JobId = new Guid(model.JobId);
-            leave.LeaveType = model.LeaveType == "离职" ? "0" : "1";
-            leave.CreateTime = DateTime.Now;
-            leave.UpdateTime = DateTime.Now;
-            leave.ApplyDate = model.ApplyTime;
-            leave.Reason = model.Reason;
-            db.LeaveOffice.Add(leave);
-            int num = db.SaveChanges();
+            LeaveOffice leave = new LeaveOffice
+            {
+                Id = Guid.NewGuid(),
+                StaffName = model.StaffName,
+                No = "0",
+                JobId = new Guid(model.JobId),
+                LeaveType = model.LeaveType == "离职" ? "0" : "1",
+                CreateTime = DateTime.Now,
+                UpdateTime = DateTime.Now,
+                ApplyDate = model.ApplyTime,
+                Reason = model.Reason
+            };
+            _db.LeaveOffice.Add(leave);
+            int num = _db.SaveChanges();
             if (num > 0)
             {
                 return new ResponseModel<bool> { code = (int)code.Success, data = true, message = "添加离职信息成功" };
@@ -88,10 +101,10 @@ namespace OilStationCoreAPI.Services
 
         public ResponseModel<bool> Leave_Check(CheckViewModel model)
         {
-            var leave = db.LeaveOffice.Where(x => x.Id.ToString().ToLower() == model.id).FirstOrDefault();
+            var leave = _db.LeaveOffice.Where(x => x.Id.ToString().ToLower() == model.Id).FirstOrDefault();
             leave.No = model.CheckNo;
-            db.LeaveOffice.Update(leave);
-            int num = db.SaveChanges();
+            _db.LeaveOffice.Update(leave);
+            int num = _db.SaveChanges();
             if (num > 0)
             {
                 return new ResponseModel<bool> { code = (int)code.Success, data = true, message = "审核离职信息成功" };
@@ -101,9 +114,9 @@ namespace OilStationCoreAPI.Services
 
         public ResponseModel<bool> Leave_Delete(string id)
         {
-            var leave = db.LeaveOffice.Where(x => x.Id.ToString().ToLower() == id).FirstOrDefault();
-            db.LeaveOffice.Remove(leave);
-            int num = db.SaveChanges();
+            var leave = _db.LeaveOffice.Where(x => x.Id.ToString().ToLower() == id).FirstOrDefault();
+            _db.LeaveOffice.Remove(leave);
+            int num = _db.SaveChanges();
             if (num > 0)
             {
                 return new ResponseModel<bool> { code = (int)code.Success, data = true, message = "删除离职信息成功" };

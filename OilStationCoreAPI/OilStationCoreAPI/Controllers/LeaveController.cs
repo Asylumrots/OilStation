@@ -10,6 +10,9 @@ using OilStationCoreAPI.ViewModels;
 
 namespace OilStationCoreAPI.Controllers
 {
+    /// <summary>
+    /// 离职信息控制器
+    /// </summary>
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class LeaveController : ControllerBase

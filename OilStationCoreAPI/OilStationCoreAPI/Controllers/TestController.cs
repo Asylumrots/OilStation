@@ -14,9 +14,11 @@ using OilStationCoreAPI.ViewModels;
 
 namespace OilStationCoreAPI.Controllers
 {
+    /// <summary>
+    /// 测试控制器
+    /// </summary>
     [Route("api/[controller]/[action]")]
     [ApiController]
-    //测试
     public class TestController : ControllerBase
     {
         public TestController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)

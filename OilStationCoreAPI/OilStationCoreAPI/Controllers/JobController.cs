@@ -11,6 +11,9 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace OilStationCoreAPI.Controllers
 {
+    /// <summary>
+    /// 职位信息控制器
+    /// </summary>
     [Route("api/[controller]/[action]")]
     public class JobController : ControllerBase
     {

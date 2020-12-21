@@ -1,31 +1,35 @@
-﻿using Microsoft.AspNetCore.Identity;
-using OilStationCoreAPI.IServices;
+﻿using OilStationCoreAPI.IServices;
 using OilStationCoreAPI.Models;
 using OilStationCoreAPI.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
 using static OilStationCoreAPI.ViewModels.CodeEnum;
 
 namespace OilStationCoreAPI.Services
 {
     public class AspNetRolesServices : IAspNetRolesServices
     {
-        OSMSContext db = new OSMSContext();
+        private readonly OSMSContext _db;
+
+        public AspNetRolesServices(OSMSContext db)
+        {
+            _db = db;
+        }
 
         public ResponseModel<IEnumerable<RolesViewModel>> Roles_Get()
         {
-            var list = db.AspNetRoles.Where(x => true);
+            var list = _db.AspNetRoles.Where(x => true);
             List<RolesViewModel> reList = new List<RolesViewModel>();
             try
             {
                 foreach (var item in list)
                 {
-                    RolesViewModel model = new RolesViewModel();
-                    model.Id = item.Id;
-                    model.Name = item.Name;
+                    RolesViewModel model = new RolesViewModel
+                    {
+                        Id = item.Id,
+                        Name = item.Name
+                    };
                     reList.Add(model);
                 }
                 reList.AsEnumerable();
@@ -49,23 +53,25 @@ namespace OilStationCoreAPI.Services
 
         public ResponseModel<bool> Roles_Update(UserRolesViewModel model)
         {
-            var UserRole = db.AspNetUserRoles.Where(x => x.UserId == model.UserId).FirstOrDefault();
+            var UserRole = _db.AspNetUserRoles.Where(x => x.UserId == model.UserId).FirstOrDefault();
             int num = 0;
             if (UserRole != null)
             {
-                db.AspNetUserRoles.Remove(UserRole);
-                num = db.SaveChanges();
+                _db.AspNetUserRoles.Remove(UserRole);
+                num = _db.SaveChanges();
                 UserRole.RoleId = model.RoleId;
-                db.AspNetUserRoles.Add(UserRole);
+                _db.AspNetUserRoles.Add(UserRole);
             }
             else
             {
-                AspNetUserRoles aspNetUserRoles = new AspNetUserRoles();
-                aspNetUserRoles.UserId = model.UserId;
-                aspNetUserRoles.RoleId = model.RoleId;
-                db.AspNetUserRoles.Add(aspNetUserRoles);
+                AspNetUserRoles aspNetUserRoles = new AspNetUserRoles
+                {
+                    UserId = model.UserId,
+                    RoleId = model.RoleId
+                };
+                _db.AspNetUserRoles.Add(aspNetUserRoles);
             }
-            num += db.SaveChanges();
+            num += _db.SaveChanges();
             if (num > 0)
                 return new ResponseModel<bool>
                 {
@@ -84,7 +90,7 @@ namespace OilStationCoreAPI.Services
 
         public ResponseModel<IEnumerable<string>> Claim_Get(string RoleId)
         {
-            var list = db.AspNetRoleClaims.Where(x => x.RoleId == RoleId);
+            var list = _db.AspNetRoleClaims.Where(x => x.RoleId == RoleId);
             List<string> reList = new List<string>();
             try
             {
@@ -114,26 +120,29 @@ namespace OilStationCoreAPI.Services
 
         public ResponseModel<bool> Claim_Update(ClaimViewModel model)
         {
-            var flag = db.AspNetRoleClaims.Where(x => x.RoleId == model.RoleId);
+            var flag = _db.AspNetRoleClaims.Where(x => x.RoleId == model.RoleId);
             foreach (var item in flag)
             {
-                db.AspNetRoleClaims.Remove(item);
+                _db.AspNetRoleClaims.Remove(item);
             }
             List<string> list = model.ClaimList;
             foreach (var item in list)
             {
                 var s = item.Split("_");
-                if (s.Length==1)
+                if (s.Length == 1)
                 {
                     continue;
                 }
-                AspNetRoleClaims roleClaims = new AspNetRoleClaims();
-                roleClaims.RoleId = model.RoleId;
-                roleClaims.ClaimType = s[0];
-                roleClaims.ClaimValue = s[1];
-                db.AspNetRoleClaims.Add(roleClaims);
+
+                AspNetRoleClaims roleClaims = new AspNetRoleClaims
+                {
+                    RoleId = model.RoleId,
+                    ClaimType = s[0],
+                    ClaimValue = s[1]
+                };
+                _db.AspNetRoleClaims.Add(roleClaims);
             }
-            int n = db.SaveChanges();
+            int n = _db.SaveChanges();
             if (n > 0)
             {
                 return new ResponseModel<bool>

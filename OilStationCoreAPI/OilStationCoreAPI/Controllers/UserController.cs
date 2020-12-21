@@ -17,6 +17,9 @@ using static OilStationCoreAPI.ViewModels.CodeEnum;
 
 namespace OilStationCoreAPI.Controllers
 {
+    /// <summary>
+    /// 用户控制器
+    /// </summary>
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class UserController : ControllerBase
