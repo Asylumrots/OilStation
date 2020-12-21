@@ -21,14 +21,14 @@ namespace OilStationCoreAPI.Controllers
     [ApiController]
     public class TestController : ControllerBase
     {
-        public TestController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
-        {
-            this._userManager = userManager;
-            this._roleManager = roleManager;
-        }
-        
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+
+        public TestController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+        {
+            _userManager = userManager;
+            _roleManager = roleManager;
+        }
 
         [HttpGet]
         public async Task<int> reg()

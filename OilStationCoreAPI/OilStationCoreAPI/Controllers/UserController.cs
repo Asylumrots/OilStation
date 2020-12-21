@@ -24,21 +24,20 @@ namespace OilStationCoreAPI.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        //依赖注入
-        public UserController(IAspNetUsersServices aspNetUsersServices, IAspNetRolesServices aspNetRolesServices, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager)
-        {
-            this._aspNetUsersServices = aspNetUsersServices;
-            this._aspNetRolesServices = aspNetRolesServices;
-            this._userManager = userManager;
-            this._signInManager = signInManager;
-            this._roleManager = roleManager;
-        }
-
         private readonly IAspNetUsersServices _aspNetUsersServices;
         private readonly IAspNetRolesServices _aspNetRolesServices;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+
+        public UserController(IAspNetUsersServices aspNetUsersServices, IAspNetRolesServices aspNetRolesServices, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager)
+        {
+            _aspNetUsersServices = aspNetUsersServices;
+            _aspNetRolesServices = aspNetRolesServices;
+            _userManager = userManager;
+            _signInManager = signInManager;
+            _roleManager = roleManager;
+        }
 
         /// <summary>
         /// 登录

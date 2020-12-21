@@ -21,7 +21,7 @@ namespace OilStationCoreAPI.Controllers
 
         public JobController(IJobServices jobServices)
         {
-            this._jobServices = jobServices;
+            _jobServices = jobServices;
         }
 
         /// <summary>

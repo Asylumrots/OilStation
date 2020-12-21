@@ -22,7 +22,7 @@ namespace OilStationCoreAPI.Controllers
 
         public EntryController(IEntryServices entryServices)
         {
-            this._entryServices = entryServices;
+            _entryServices = entryServices;
         }
 
         /// <summary>

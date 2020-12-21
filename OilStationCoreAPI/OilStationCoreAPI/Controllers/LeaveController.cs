@@ -21,7 +21,7 @@ namespace OilStationCoreAPI.Controllers
 
         public LeaveController(ILeaveServices leaveServices)
         {
-            this._leaveServices = leaveServices;
+            _leaveServices = leaveServices;
         }
 
         /// <summary>

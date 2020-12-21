@@ -21,7 +21,7 @@ namespace OilStationCoreAPI.Controllers
 
         public OrganizationController(IOrganizationServices organizationServices)
         {
-            this._organizationServices = organizationServices;
+            _organizationServices = organizationServices;
         }
 
         /// <summary>
