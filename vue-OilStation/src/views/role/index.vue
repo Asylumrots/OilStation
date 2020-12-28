@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-table :data="tableData" style="width: 100%">
+    <el-table :data="tableData" style="width: 100%" v-loading="loading">
       <!-- v-for="(item,index) in tableData" :key="item.id" -->
       <el-table-column type="expand">
         <template slot-scope="props">
@@ -59,6 +59,7 @@ import { GetUserRole,GetRoles,UpdateRoles } from "@/api/authorize";
 export default {
   data() {
     return {
+      loading: true,
       tableData: [],
       rolesData: [],
       dialogVisible: false,
@@ -82,6 +83,7 @@ export default {
     GetRoles() {
       GetRoles().then(res => {
         this.rolesData=res.data;
+        this.loading=false;
       });
     },
     OpenDia(index) {

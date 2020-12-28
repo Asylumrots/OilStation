@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -36,6 +38,7 @@ namespace OilStationCoreAPI
             #region 注册dbcontext和identity服务
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(
                 Configuration.GetConnectionString("DefaultConnection")));
+            //DbContext默认注册的Scoped生命周期 为了防止DI报错 依赖注入此项的Services不能是Singleton
             services.AddDbContext<OSMSContext>(options => options.UseSqlServer(
                 Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<ApplicationUser>()
@@ -72,17 +75,33 @@ namespace OilStationCoreAPI
             services.AddJwtSetup(Configuration);
 
             #region 依赖注入Services
-            services.AddSingleton<IStaffServices, StaffServices>();
-            services.AddSingleton<IAspNetUsersServices, AspNetUsersServices>();
-            services.AddSingleton<IAspNetRolesServices, AspNetRolesServices>();
-            services.AddSingleton<IJobServices, JobServices>();
-            services.AddSingleton<IOrganizationServices, OrganizationServices>();
-            services.AddSingleton<IEntryServices, EntryServices>();
-            services.AddSingleton<ILeaveServices, LeaveServices>();
-            services.AddSingleton<IOilServices, OilServices>();
+            //默认注入
+            //services.AddScoped<IStaffServices, StaffServices>();
+            //services.AddScoped<IAspNetUsersServices, AspNetUsersServices>();
+            //services.AddScoped<IAspNetRolesServices, AspNetRolesServices>();
+            //services.AddScoped<IJobServices, JobServices>();
+            //services.AddScoped<IOrganizationServices, OrganizationServices>();
+            //services.AddScoped<IEntryServices, EntryServices>();
+            //services.AddScoped<ILeaveServices, LeaveServices>();
+            //services.AddScoped<IOilServices, OilServices>();
+            //自动依赖注入1：根据类名后缀和前缀进行注入
+            var assembly = Assembly.GetExecutingAssembly()
+                .DefinedTypes
+                .Where(a => a.Name.EndsWith("Services") && !a.Name.StartsWith("I"));
+
+            foreach (var item in assembly)
+            {
+                services.AddScoped(item.GetInterfaces().FirstOrDefault(), item);
+            }
+
+            //自动注入方法2: 根据继承的接口来注册不同生命周期
+            //var assemblyWeb = Assembly.GetExecutingAssembly();
+            //services.AddAutoInjectionSetup(assemblyWeb);
             #endregion
 
-            services.AddSingleton(new OSMSContext());
+            //易引发线程安全问题
+            //services.AddSingleton(new OSMSContext());
+
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-table :data="tableData" style="width: 100%">
+    <el-table :data="tableData" style="width: 100%" v-loading="loading">
       <!-- <el-table-column type="index"></el-table-column> -->
       <el-table-column prop="id" label="ID" sortable></el-table-column>
       <el-table-column prop="name" label="名称" sortable></el-table-column>
@@ -27,6 +27,7 @@ import { GetRoles, GetClaim, UpdateClaim } from "@/api/authorize";
 export default {
   data() {
     return {
+      loading: true,
       tableData: [],
       dialogVisible: false,
       data: [
@@ -210,6 +211,7 @@ export default {
     GetRoles() {
       GetRoles().then(res => {
         this.tableData = res.data;
+        this.loading=false;
       });
     },
     // GetClaim(RoleId) {
